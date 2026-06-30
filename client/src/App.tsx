@@ -18,13 +18,32 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
   return children
 }
 
+function PublicRoute({ children }: { children: React.ReactNode }) {
+  const token = localStorage.getItem('access_token')
+  return token ? <Navigate to="/dashboard" replace /> : <>{children}</>
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/onboard" element={<OnboardPage />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/onboard"
+          element={
+            <PublicRoute>
+              <OnboardPage />
+            </PublicRoute>
+          }
+        />
         <Route path="/shared/:token" element={<SharedSlidePage />} />
         <Route
           path="/dashboard"
