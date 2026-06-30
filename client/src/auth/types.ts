@@ -10,4 +10,5 @@ export type CurrentUser = {
   email: string
   name: string | null
   is_admin: boolean
+  permissions: string[]
 }

@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from './auth/LoginPage'
 import OnboardPage from './auth/OnboardPage'
 import DashboardPage from './pages/DashboardPage'
+import ReportsPage from './reports/pages/ReportsPage'
 import UsersPage from './users/pages/UsersPage'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -34,6 +35,14 @@ export default function App() {
           element={
             <RequireAuth>
               <UsersPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <RequireAuth>
+              <ReportsPage />
             </RequireAuth>
           }
         />

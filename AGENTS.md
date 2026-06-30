@@ -197,10 +197,12 @@ this explicitly during setup.
 
 ### Reports
 
-- [ ] Create report
-- [ ] View report
-- [ ] Edit report
-- [ ] Delete report
+- [x] Create report
+- [x] View report
+- [x] Edit report
+- [x] Delete report
+- [x] Add frontend reports feature folder with API/types/hooks/pages/components
+- [x] Add permission-aware report create/edit/delete actions
 - [ ] Attach slides to report
 
 ### SVS Uploads

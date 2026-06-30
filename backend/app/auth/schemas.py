@@ -23,3 +23,4 @@ class MeResponse(BaseModel):
     email: str
     name: str | None
     is_admin: bool
+    permissions: list[str]

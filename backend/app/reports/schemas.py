@@ -1,4 +1,6 @@
 from datetime import datetime
+from uuid import UUID
+
 from pydantic import BaseModel, Field
 
 
@@ -13,10 +15,10 @@ class ReportUpdateRequest(BaseModel):
 
 
 class ReportResponse(BaseModel):
-    id: str
+    id: UUID
     title: str
     description: str | None
-    owner_id: str
+    owner_id: UUID
     created_at: datetime
     updated_at: datetime
 

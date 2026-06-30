@@ -11,6 +11,7 @@ from app.auth.schemas import (
     OnboardRequest,
     MeResponse,
 )
+from app.permissions import ALL_PERMISSIONS, get_user_permissions
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -41,4 +42,5 @@ def me(claims: dict = Depends(get_current_claims), db: Session = Depends(get_db)
         email=user.email,
         name=user.name,
         is_admin=user.is_admin,
+        permissions=ALL_PERMISSIONS if user.is_admin else sorted(get_user_permissions(db, user.id)),
     )
