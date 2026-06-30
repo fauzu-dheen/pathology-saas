@@ -4,6 +4,8 @@ from fastapi import HTTPException
 
 from app import models, storage
 
+MAX_SVS_FILE_SIZE_BYTES = 50 * 1024 * 1024
+
 
 def list_slides_for_report(db: Session, org_id: str, report_id: str) -> list[models.Slide]:
     return (
@@ -44,6 +46,9 @@ def upload_slide(
 ) -> None:
     if not filename.lower().endswith(".svs"):
         raise HTTPException(status_code=400, detail="Only .svs files are allowed")
+
+    if len(file_bytes) > MAX_SVS_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=413, detail="Only SVS files below 50 MB are allowed")
 
     # confirm report exists in this org before attaching a slide to it
     report = db.query(models.Report).filter_by(id=report_id, organization_id=org_id).first()
