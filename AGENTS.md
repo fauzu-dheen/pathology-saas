@@ -192,8 +192,8 @@ this explicitly during setup.
 - [ ] Create permission model
 - [ ] Grant all permissions to organization admin
 - [ ] Add backend permission checks
-- [ ] Add frontend permission-aware actions
-- [ ] Add admin UI for editing user permissions
+- [x] Add frontend permission-aware actions
+- [x] Add admin UI for editing user permissions
 
 ### Reports
 

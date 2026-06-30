@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import type { User } from '../types'
+import { ALL_PERMISSIONS } from '../types'
+import type { Permission, User } from '../types'
 
 type UsersTableProps = {
   users: User[]
   isUpdating: boolean
   isDeleting: boolean
+  isUpdatingPermissions: boolean
   onUpdate: (input: { id: string; name: string | null; is_admin: boolean }) => void
+  onUpdatePermissions: (input: { id: string; permissions: Permission[] }) => void
   onDelete: (id: string) => void
 }
 
@@ -13,23 +16,36 @@ export default function UsersTable({
   users,
   isUpdating,
   isDeleting,
+  isUpdatingPermissions,
   onUpdate,
+  onUpdatePermissions,
   onDelete,
 }: UsersTableProps) {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draftName, setDraftName] = useState('')
   const [draftIsAdmin, setDraftIsAdmin] = useState(false)
+  const [draftPermissions, setDraftPermissions] = useState<Permission[]>([])
 
   const startEdit = (user: User) => {
     setEditingId(user.id)
     setDraftName(user.name ?? '')
     setDraftIsAdmin(user.is_admin)
+    setDraftPermissions(user.permissions)
   }
 
   const cancelEdit = () => {
     setEditingId(null)
     setDraftName('')
     setDraftIsAdmin(false)
+    setDraftPermissions([])
+  }
+
+  const togglePermission = (permission: Permission) => {
+    setDraftPermissions((current) =>
+      current.includes(permission)
+        ? current.filter((item) => item !== permission)
+        : [...current, permission],
+    )
   }
 
   const saveEdit = (id: string) => {
@@ -37,6 +53,10 @@ export default function UsersTable({
       id,
       name: draftName.trim() || null,
       is_admin: draftIsAdmin,
+    })
+    onUpdatePermissions({
+      id,
+      permissions: draftPermissions,
     })
     cancelEdit()
   }
@@ -61,6 +81,7 @@ export default function UsersTable({
               <th className="px-5 py-3">User</th>
               <th className="px-5 py-3">Google linked</th>
               <th className="px-5 py-3">Access</th>
+              <th className="px-5 py-3">Permissions</th>
               <th className="px-5 py-3 text-right">Actions</th>
             </tr>
           </thead>
@@ -114,13 +135,52 @@ export default function UsersTable({
                       <span className="text-slate-700">{user.is_admin ? 'Admin' : 'Member'}</span>
                     )}
                   </td>
+                  <td className="px-5 py-4">
+                    {isEditing ? (
+                      <div className="grid min-w-64 gap-2">
+                        {ALL_PERMISSIONS.map((permission) => (
+                          <label
+                            key={permission}
+                            className="inline-flex items-center gap-2 text-sm text-slate-700"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={draftPermissions.includes(permission)}
+                              onChange={() => togglePermission(permission)}
+                              className="size-4 rounded border-slate-300 text-sky-700 focus:ring-sky-200"
+                            />
+                            {permission}
+                          </label>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex max-w-80 flex-wrap gap-1.5">
+                        {user.is_admin ? (
+                          <span className="rounded-full bg-sky-50 px-2 py-1 text-xs font-medium text-sky-700">
+                            All permissions
+                          </span>
+                        ) : user.permissions.length > 0 ? (
+                          user.permissions.map((permission) => (
+                            <span
+                              key={permission}
+                              className="rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700"
+                            >
+                              {permission}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-sm text-slate-500">No explicit permissions</span>
+                        )}
+                      </div>
+                    )}
+                  </td>
                   <td className="px-5 py-4 text-right">
                     {isEditing ? (
                       <div className="flex justify-end gap-2">
                         <button
                           type="button"
                           onClick={() => saveEdit(user.id)}
-                          disabled={isUpdating}
+                          disabled={isUpdating || isUpdatingPermissions}
                           className="rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           Save
