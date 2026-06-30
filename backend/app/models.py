@@ -74,6 +74,9 @@ class Report(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=now_utc, onupdate=now_utc
     )
+    slides: Mapped[list["Slide"]] = relationship(
+        back_populates="report", cascade="all, delete-orphan", passive_deletes=True
+    )
 
 
 class Slide(Base):
@@ -84,7 +87,7 @@ class Slide(Base):
         ForeignKey("organizations.id"), nullable=False, index=True
     )
     report_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("reports.id"), nullable=False, index=True
+        ForeignKey("reports.id", ondelete="CASCADE"), nullable=False, index=True
     )
     owner_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("users.id", ondelete="SET NULL"), nullable=True
@@ -94,18 +97,27 @@ class Slide(Base):
     status: Mapped[str] = mapped_column(String, nullable=False, default="ready")
     file_size_bytes: Mapped[int] = mapped_column(nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
-
-
+    report: Mapped["Report"] = relationship(back_populates="slides")
+    shares: Mapped[list["SlideShare"]] = relationship(
+        back_populates="slide", cascade="all, delete-orphan", passive_deletes=True
+    )
 
 class SlideShare(Base):
     __tablename__ = "slide_shares"
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    organization_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("organizations.id"), nullable=False, index=True)
-    slide_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("slides.id"), nullable=False, index=True)
+    organization_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("organizations.id"), nullable=False, index=True
+    )
+    slide_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("slides.id", ondelete="CASCADE"), nullable=False, index=True
+    )
     owner_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("users.id", ondelete="SET NULL"), nullable=True
     )
-    token: Mapped[str] = mapped_column(String, unique=True, nullable=False, index=True, default=lambda: secrets.token_urlsafe(32))
+    token: Mapped[str] = mapped_column(
+        String, unique=True, nullable=False, index=True, default=lambda: secrets.token_urlsafe(32)
+    )
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
+    slide: Mapped["Slide"] = relationship(back_populates="shares")
