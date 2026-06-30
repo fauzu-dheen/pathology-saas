@@ -3,6 +3,7 @@ import type { CredentialResponse } from '@react-oauth/google';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
+import type { AuthResponse } from './types';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -14,16 +15,18 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const data = await apiFetch('/auth/google', {
+      const data = await apiFetch<AuthResponse>('/auth/google', {
         method: 'POST',
         body: JSON.stringify({ id_token: cred.credential }),
       });
 
-      if (data.needs_onboarding) {
+      if (data.needs_onboarding && data.pending_token) {
         navigate('/onboard', { state: { pendingToken: data.pending_token } });
-      } else {
+      } else if (data.access_token) {
         localStorage.setItem('access_token', data.access_token);
         navigate('/dashboard');
+      } else {
+        setError('Login response was missing a session token.');
       }
     } catch {
       setError('Google sign-in succeeded, but the application login failed.');

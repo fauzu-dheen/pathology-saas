@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
+import type { AuthResponse } from './types';
 
 export default function OnboardPage() {
   const { state } = useLocation();
@@ -20,12 +21,16 @@ export default function OnboardPage() {
     e.preventDefault();
     setError(null);
     try {
-      const data = await apiFetch('/auth/onboard', {
+      const data = await apiFetch<AuthResponse>('/auth/onboard', {
         method: 'POST',
         body: JSON.stringify({ pending_token: pendingToken, org_name: orgName, org_slug: orgSlug }),
       });
-      localStorage.setItem('access_token', data.access_token);
-      navigate('/dashboard');
+      if (data.access_token) {
+        localStorage.setItem('access_token', data.access_token);
+        navigate('/dashboard');
+      } else {
+        setError('Onboarding response was missing a session token.');
+      }
     } catch {
       setError('Could not create organization — slug may already be taken.');
     }

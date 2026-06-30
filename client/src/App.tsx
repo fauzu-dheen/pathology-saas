@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from './auth/LoginPage'
 import OnboardPage from './auth/OnboardPage'
 import DashboardPage from './pages/DashboardPage'
+import UsersPage from './users/pages/UsersPage'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem('access_token')
@@ -25,6 +26,14 @@ export default function App() {
           element={
             <RequireAuth>
               <DashboardPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <RequireAuth>
+              <UsersPage />
             </RequireAuth>
           }
         />

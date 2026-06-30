@@ -179,11 +179,13 @@ this explicitly during setup.
 
 ### User Management
 
-- [ ] List organization users
-- [ ] Create user by email
-- [ ] Edit user details
-- [ ] Delete or deactivate user
-- [ ] Associate pre-created user with Google account on first auth
+- [x] List organization users
+- [x] Create user by email
+- [x] Edit user details
+- [x] Delete or deactivate user
+- [x] Associate pre-created user with Google account on first auth
+- [x] Add frontend users feature folder with API/types/hooks/pages/components
+- [x] Use TanStack Query for users list and mutation invalidation
 
 ### RBAC
 
