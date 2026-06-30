@@ -93,7 +93,7 @@ export default function OpenSeadragonViewer({
   return (
     <div
       ref={containerRef}
-      className="h-[72vh] min-h-[520px] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-950 shadow-sm"
+      className="h-[72vh] min-h-[520px] w-full overflow-hidden rounded-md border border-[#cfe0e5] bg-[#082f3a] shadow-sm"
     />
   )
 }

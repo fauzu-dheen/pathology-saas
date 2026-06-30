@@ -50,13 +50,13 @@ export default function UsersPage() {
           </p>
         )}
         {usersQuery.isLoading && (
-          <div className="rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
+          <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
             Loading users...
           </div>
         )}
 
         {usersQuery.error && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-sm text-red-700">
+          <div className="rounded-md border border-red-200 bg-red-50 p-8 text-sm text-red-700">
             {getErrorMessage(usersQuery.error)}
           </div>
         )}

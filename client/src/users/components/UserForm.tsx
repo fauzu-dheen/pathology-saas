@@ -24,10 +24,10 @@ export default function UserForm({ isSubmitting, error, onSubmit }: UserFormProp
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-md border border-slate-200 bg-white p-5 shadow-sm"
+      className="clinical-card rounded-md p-5"
     >
       <div className="mb-5">
-        <h2 className="text-base font-semibold text-slate-950">Create user</h2>
+        <h2 className="text-base font-semibold text-[#102a35]">Create user</h2>
         <p className="mt-1 text-sm text-slate-600">
           Add a user by email. Their Google account links on first sign-in.
         </p>
@@ -41,7 +41,7 @@ export default function UserForm({ isSubmitting, error, onSubmit }: UserFormProp
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
+            className="clinical-input mt-2 w-full rounded-md px-3 py-2 text-sm outline-none"
             placeholder="pathologist@example.com"
           />
         </label>
@@ -51,7 +51,7 @@ export default function UserForm({ isSubmitting, error, onSubmit }: UserFormProp
           <input
             value={name}
             onChange={(event) => setName(event.target.value)}
-            className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
+            className="clinical-input mt-2 w-full rounded-md px-3 py-2 text-sm outline-none"
             placeholder="Dr. Jane Doe"
           />
         </label>
@@ -63,7 +63,7 @@ export default function UserForm({ isSubmitting, error, onSubmit }: UserFormProp
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="clinical-primary rounded-md px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? 'Creating...' : 'Create user'}
         </button>

@@ -34,11 +34,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
-      <main className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
+    <div className="clinical-page-bg flex min-h-screen items-center justify-center px-6">
+      <main className="clinical-card w-full max-w-md rounded-md p-8">
         <div className="mb-8">
-          <p className="text-sm font-medium text-sky-700">Pathology SaaS</p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">
+          <div className="mb-5 grid size-11 place-items-center rounded-md bg-[#082f3a]">
+            <div className="size-5 rounded-sm border-2 border-cyan-100 bg-teal-200/20" />
+          </div>
+          <p className="text-sm font-semibold text-[#0f766e]">Pathology SaaS</p>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[#102a35]">
             Sign in to your workspace
           </h1>
           <p className="mt-2 text-sm text-slate-600">

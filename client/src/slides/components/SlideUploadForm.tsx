@@ -45,10 +45,10 @@ export default function SlideUploadForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
+      className="clinical-card rounded-md p-5"
     >
       <div className="mb-5">
-        <h2 className="text-base font-semibold text-slate-950">Upload SVS files</h2>
+        <h2 className="text-base font-semibold text-[#102a35]">Upload SVS files</h2>
         <p className="mt-1 text-sm text-slate-600">
           Attach one or more whole slide images to this report.
         </p>
@@ -61,7 +61,7 @@ export default function SlideUploadForm({
           accept=".svs"
           multiple
           onChange={(event) => handleFilesChange(Array.from(event.target.files ?? []))}
-          className="mt-2 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-md file:border-0 file:bg-sky-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-sky-700 hover:file:bg-sky-100"
+          className="clinical-input mt-2 block w-full rounded-md px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-md file:border-0 file:bg-[#dff7f6] file:px-3 file:py-2 file:text-sm file:font-semibold file:text-[#0f766e] hover:file:bg-[#c9eeec]"
         />
         <span className="mt-2 block text-xs text-slate-500">Maximum file size: 50 MB.</span>
       </label>
@@ -81,14 +81,14 @@ export default function SlideUploadForm({
       )}
 
       {progress && (
-        <div className="mt-5 rounded-md border border-slate-200 bg-slate-50 p-4">
+        <div className="clinical-muted-panel mt-5 rounded-md p-4">
           <div className="flex items-center justify-between text-sm">
             <span className="font-medium text-slate-700">Upload progress</span>
-            <span className="font-semibold text-slate-950">{progress.percent}%</span>
+            <span className="font-semibold text-[#102a35]">{progress.percent}%</span>
           </div>
           <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200">
             <div
-              className="h-full rounded-full bg-sky-700 transition-all"
+              className="h-full rounded-full bg-[#0f766e] transition-all"
               style={{ width: `${progress.percent}%` }}
             />
           </div>
@@ -104,7 +104,7 @@ export default function SlideUploadForm({
                 </div>
                 <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200">
                   <div
-                    className="h-full rounded-full bg-emerald-600 transition-all"
+                    className="h-full rounded-full bg-[#14b8a6] transition-all"
                     style={{ width: `${file.percent}%` }}
                   />
                 </div>
@@ -122,7 +122,7 @@ export default function SlideUploadForm({
         <button
           type="submit"
           disabled={isUploading || files.length === 0 || hasOversizedFiles}
-          className="rounded-md bg-sky-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="clinical-primary rounded-md px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isUploading ? 'Uploading...' : 'Upload slides'}
         </button>

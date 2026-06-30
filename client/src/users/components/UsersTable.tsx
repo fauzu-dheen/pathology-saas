@@ -63,8 +63,8 @@ export default function UsersTable({
 
   if (users.length === 0) {
     return (
-      <div className="rounded-md border border-dashed border-slate-300 bg-white p-8 text-center">
-        <h2 className="text-base font-semibold text-slate-950">No users yet</h2>
+      <div className="clinical-card rounded-md border-dashed p-8 text-center">
+        <h2 className="text-base font-semibold text-[#102a35]">No users yet</h2>
         <p className="mt-1 text-sm text-slate-600">
           Create the first non-admin user to start building the organization roster.
         </p>
@@ -73,10 +73,10 @@ export default function UsersTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
+    <div className="clinical-card overflow-hidden rounded-md">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
-          <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <table className="clinical-table min-w-full divide-y divide-[#d8e7eb] text-left text-sm">
+          <thead className="text-xs font-semibold uppercase tracking-wide">
             <tr>
               <th className="px-5 py-3">User</th>
               <th className="px-5 py-3">Google linked</th>
@@ -97,14 +97,14 @@ export default function UsersTable({
                         <input
                           value={draftName}
                           onChange={(event) => setDraftName(event.target.value)}
-                          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
+                          className="clinical-input w-full rounded-md px-3 py-2 text-sm outline-none"
                           placeholder="Name"
                         />
                         <p className="text-xs text-slate-500">{user.email}</p>
                       </div>
                     ) : (
                       <div>
-                        <p className="font-medium text-slate-950">{user.name || 'Unnamed user'}</p>
+                        <p className="font-medium text-[#102a35]">{user.name || 'Unnamed user'}</p>
                         <p className="mt-1 text-slate-600">{user.email}</p>
                       </div>
                     )}
@@ -113,8 +113,8 @@ export default function UsersTable({
                     <span
                       className={
                         user.google_sub
-                          ? 'inline-flex rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700'
-                          : 'inline-flex rounded-full bg-amber-50 px-2 py-1 text-xs font-medium text-amber-700'
+                          ? 'inline-flex rounded-full bg-[#e4f8ef] px-2 py-1 text-xs font-medium text-[#0f766e]'
+                          : 'inline-flex rounded-full bg-[#fff7d6] px-2 py-1 text-xs font-medium text-[#8a5a00]'
                       }
                     >
                       {user.google_sub ? 'Linked' : 'Pending'}
@@ -127,7 +127,7 @@ export default function UsersTable({
                           type="checkbox"
                           checked={draftIsAdmin}
                           onChange={(event) => setDraftIsAdmin(event.target.checked)}
-                          className="size-4 rounded border-slate-300 text-slate-900 focus:ring-slate-200"
+                          className="size-4 rounded border-slate-300 text-[#0f766e] focus:ring-[#bdecea]"
                         />
                         Admin
                       </label>
@@ -147,7 +147,7 @@ export default function UsersTable({
                               type="checkbox"
                               checked={draftPermissions.includes(permission)}
                               onChange={() => togglePermission(permission)}
-                              className="size-4 rounded border-slate-300 text-slate-900 focus:ring-slate-200"
+                              className="size-4 rounded border-slate-300 text-[#0f766e] focus:ring-[#bdecea]"
                             />
                             {permission}
                           </label>
@@ -156,7 +156,7 @@ export default function UsersTable({
                     ) : (
                       <div className="flex max-w-80 flex-wrap gap-1.5">
                         {user.is_admin ? (
-                          <span className="rounded-full bg-slate-900 px-2 py-1 text-xs font-medium text-white">
+                          <span className="rounded-full bg-[#0f766e] px-2 py-1 text-xs font-medium text-white">
                             All permissions
                           </span>
                         ) : user.permissions.length > 0 ? (
@@ -182,14 +182,14 @@ export default function UsersTable({
                             type="button"
                             onClick={() => saveEdit(user.id)}
                             disabled={isUpdating}
-                            className="rounded-md bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="clinical-primary rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             Save
                           </button>
                           <button
                             type="button"
                             onClick={cancelEdit}
-                            className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                            className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
                           >
                             Cancel
                           </button>
@@ -199,7 +199,7 @@ export default function UsersTable({
                           <button
                             type="button"
                             onClick={() => startEdit(user)}
-                            className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                            className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
                           >
                             Edit
                           </button>
@@ -207,7 +207,7 @@ export default function UsersTable({
                             type="button"
                             onClick={() => onDelete(user.id)}
                             disabled={isDeleting}
-                            className="rounded-md border border-red-200 px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="clinical-danger rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             Delete
                           </button>

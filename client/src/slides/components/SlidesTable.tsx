@@ -39,8 +39,8 @@ export default function SlidesTable({
 }: SlidesTableProps) {
   if (slides.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
-        <h2 className="text-base font-semibold text-slate-950">No slides yet</h2>
+      <div className="clinical-card rounded-md border-dashed p-8 text-center">
+        <h2 className="text-base font-semibold text-[#102a35]">No slides yet</h2>
         <p className="mt-1 text-sm text-slate-600">
           Upload an SVS file to attach it to this report.
         </p>
@@ -49,10 +49,10 @@ export default function SlidesTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+    <div className="clinical-card overflow-hidden rounded-md">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
-          <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <table className="clinical-table min-w-full divide-y divide-[#d8e7eb] text-left text-sm">
+          <thead className="text-xs font-semibold uppercase tracking-wide">
             <tr>
               <th className="px-5 py-3">File</th>
               <th className="px-5 py-3">Status</th>
@@ -66,9 +66,9 @@ export default function SlidesTable({
           <tbody className="divide-y divide-slate-100">
             {slides.map((slide) => (
               <tr key={slide.id}>
-                <td className="px-5 py-4 font-medium text-slate-950">{slide.filename}</td>
+                <td className="px-5 py-4 font-medium text-[#102a35]">{slide.filename}</td>
                 <td className="px-5 py-4">
-                  <span className="rounded-full bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">
+                  <span className="rounded-full bg-[#e4f8ef] px-2 py-1 text-xs font-semibold text-[#0f766e]">
                     {slide.status}
                   </span>
                 </td>
@@ -82,7 +82,7 @@ export default function SlidesTable({
                       {canView && (
                         <Link
                           to={`/reports/${reportId}/slides/${slide.id}/viewer`}
-                          className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                          className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
                         >
                           View
                         </Link>
@@ -92,7 +92,7 @@ export default function SlidesTable({
                           type="button"
                           onClick={() => onShare(slide.id)}
                           disabled={isSharing}
-                          className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                          className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           Share
                         </button>
@@ -102,7 +102,7 @@ export default function SlidesTable({
                           type="button"
                           onClick={() => onDelete(slide.id)}
                           disabled={isDeleting}
-                          className="rounded-md border border-red-200 px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                          className="clinical-danger rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           Delete
                         </button>

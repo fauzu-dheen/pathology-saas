@@ -1,11 +1,25 @@
 @import 'tailwindcss';
 
+:root {
+  --clinical-ink: #102a35;
+  --clinical-muted: #5d7280;
+  --clinical-line: #cfe0e5;
+  --clinical-page: #eff7f8;
+  --clinical-panel: #ffffff;
+  --clinical-sidebar: #082f3a;
+  --clinical-sidebar-soft: #123f4a;
+  --clinical-teal: #0f766e;
+  --clinical-teal-dark: #115e59;
+  --clinical-cyan-soft: #dff7f6;
+  --clinical-mint: #ebfbf6;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--clinical-page);
+  color: var(--clinical-ink);
   font-family:
     Inter,
     ui-sans-serif,
@@ -21,4 +35,74 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+::selection {
+  background: #bdecea;
+  color: var(--clinical-ink);
+}
+
+.clinical-page-bg {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(239, 247, 248, 0) 34%),
+    var(--clinical-page);
+}
+
+.clinical-card {
+  border: 1px solid var(--clinical-line);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 36px rgba(16, 42, 53, 0.07);
+}
+
+.clinical-muted-panel {
+  border: 1px solid var(--clinical-line);
+  background: #f7fbfc;
+}
+
+.clinical-input {
+  border: 1px solid #b9cdd4;
+  background: #ffffff;
+  color: var(--clinical-ink);
+}
+
+.clinical-input:focus {
+  border-color: var(--clinical-teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
+}
+
+.clinical-primary {
+  background: var(--clinical-teal);
+  color: #ffffff;
+}
+
+.clinical-primary:hover {
+  background: var(--clinical-teal-dark);
+}
+
+.clinical-secondary {
+  border: 1px solid #b9cdd4;
+  background: #ffffff;
+  color: #244653;
+}
+
+.clinical-secondary:hover {
+  background: #edf7f8;
+}
+
+.clinical-danger {
+  border: 1px solid #fecaca;
+  color: #b42318;
+}
+
+.clinical-danger:hover {
+  background: #fff1f2;
+}
+
+.clinical-table thead {
+  background: #edf7f8;
+  color: #47616c;
+}
+
+.clinical-table tbody tr:hover {
+  background: #f8fcfc;
 }
