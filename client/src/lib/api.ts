@@ -12,7 +12,18 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
       ...options.headers,
     },
   })
-  if (!res.ok) throw new Error(`API error: ${res.status}`)
+
+  if (!res.ok) {
+    let message = `API error: ${res.status}`
+    try {
+      const data = await res.json()
+      if (typeof data?.detail === 'string') {
+        message = data.detail
+      }
+    } catch {}
+    throw new Error(message)
+  }
+
   if (res.status === 204) return undefined as T
   return res.json() as Promise<T>
 }

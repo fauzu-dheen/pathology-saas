@@ -41,6 +41,13 @@ def create_user(db: Session, org_id: str, email: str, name: str | None) -> None:
     They get linked automatically on their first Google sign-in
     (see app/auth/service.py: resolve_google_login, case 2).
     """
+    existing = db.query(models.User).filter(models.User.email == email).first()
+    if existing:
+        raise HTTPException(
+            status_code=409,
+            detail="A user with this email already exists. Each email can only belong to one organization.",
+        )
+
     user = models.User(
         organization_id=org_id,
         email=email,
@@ -55,7 +62,7 @@ def create_user(db: Session, org_id: str, email: str, name: str | None) -> None:
         db.rollback()
         raise HTTPException(
             status_code=409,
-            detail="A user with this email already exists in this organization",
+            detail="A user with this email already exists. Each email can only belong to one organization.",
         )
 
 
