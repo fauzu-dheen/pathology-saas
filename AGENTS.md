@@ -225,10 +225,10 @@ this explicitly during setup.
 
 ### Sharing
 
-- [ ] Create share token
-- [ ] Open shared slide route
-- [ ] Render shared slide viewer
-- [ ] Enforce share token validity
+- [x] Create share token
+- [x] Open shared slide route
+- [x] Render shared slide viewer
+- [x] Enforce share token validity
 - [ ] Add optional expiration
 
 ### Documentation and Delivery

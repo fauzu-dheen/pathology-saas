@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useCurrentUser } from '../../auth/hooks'
 import { useReports } from '../../reports/hooks'
+import { useCreateShare } from '../../shares/hooks'
 import SlideUploadForm from '../components/SlideUploadForm'
 import SlidesTable from '../components/SlidesTable'
 import { useDeleteSlide, useSlides, useUploadSlides } from '../hooks'
@@ -24,12 +25,14 @@ export default function SlidesPage() {
   const slidesQuery = useSlides(reportId)
   const uploadSlides = useUploadSlides(reportId)
   const deleteSlide = useDeleteSlide(reportId)
+  const createShare = useCreateShare()
 
   const currentUser = currentUserQuery.data
   const report = reportsQuery.data?.find((item) => item.id === reportId)
   const canUpload =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:upload')
   const canView = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
+  const canShare = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:share')
   const canDelete =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:delete')
 
@@ -45,6 +48,24 @@ export default function SlidesPage() {
       { reportId, files, onProgress: setUploadProgress },
       {
         onSuccess: () => setUploadProgress(null),
+      },
+    )
+  }
+
+  const handleShare = (slideId: string) => {
+    if (!reportId) return
+    createShare.mutate(
+      { reportId, slideId },
+      {
+        onSuccess: async (share) => {
+          const shareUrl = `${window.location.origin}/shared/${share.token}`
+          try {
+            await navigator.clipboard?.writeText(shareUrl)
+            window.alert(`Share link copied:\n${shareUrl}`)
+          } catch {
+            window.alert(`Share link:\n${shareUrl}`)
+          }
+        },
       },
     )
   }
@@ -102,6 +123,11 @@ export default function SlidesPage() {
             {getErrorMessage(deleteSlide.error)}
           </p>
         )}
+        {createShare.error && (
+          <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {getErrorMessage(createShare.error)}
+          </p>
+        )}
 
         {slidesQuery.isLoading && (
           <div className="rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
@@ -120,8 +146,11 @@ export default function SlidesPage() {
             reportId={reportId}
             slides={slidesQuery.data}
             canView={canView === true}
+            canShare={canShare === true}
             canDelete={canDelete === true}
+            isSharing={createShare.isPending}
             isDeleting={deleteSlide.isPending}
+            onShare={handleShare}
             onDelete={handleDelete}
           />
         )}

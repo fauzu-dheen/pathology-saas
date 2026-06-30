@@ -3,6 +3,7 @@ import LoginPage from './auth/LoginPage'
 import OnboardPage from './auth/OnboardPage'
 import DashboardPage from './pages/DashboardPage'
 import ReportsPage from './reports/pages/ReportsPage'
+import SharedSlidePage from './shares/pages/SharedSlidePage'
 import SlideViewerPage from './slides/pages/SlideViewerPage'
 import SlidesPage from './slides/pages/SlidesPage'
 import UsersPage from './users/pages/UsersPage'
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/onboard" element={<OnboardPage />} />
+        <Route path="/shared/:token" element={<SharedSlidePage />} />
         <Route
           path="/dashboard"
           element={

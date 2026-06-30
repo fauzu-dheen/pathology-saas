@@ -1,12 +1,24 @@
 from datetime import datetime, timedelta, timezone
-from sqlalchemy.orm import Session
+
 from fastapi import HTTPException
+from sqlalchemy.orm import Session
 
 from app import models
 
 
-def create_share(db: Session, org_id: str, user_id: str, slide_id: str, expires_in_hours: int | None) -> models.SlideShare:
-    slide = db.query(models.Slide).filter_by(id=slide_id, organization_id=org_id).first()
+def create_share(
+    db: Session,
+    org_id: str,
+    user_id: str,
+    report_id: str,
+    slide_id: str,
+    expires_in_hours: int | None,
+) -> models.SlideShare:
+    slide = (
+        db.query(models.Slide)
+        .filter_by(id=slide_id, report_id=report_id, organization_id=org_id)
+        .first()
+    )
     if slide is None:
         raise HTTPException(status_code=404, detail="Slide not found")
 

@@ -5,8 +5,11 @@ type SlidesTableProps = {
   reportId: string
   slides: Slide[]
   canView: boolean
+  canShare: boolean
   canDelete: boolean
+  isSharing: boolean
   isDeleting: boolean
+  onShare: (id: string) => void
   onDelete: (id: string) => void
 }
 
@@ -27,8 +30,11 @@ export default function SlidesTable({
   reportId,
   slides,
   canView,
+  canShare,
   canDelete,
+  isSharing,
   isDeleting,
+  onShare,
   onDelete,
 }: SlidesTableProps) {
   if (slides.length === 0) {
@@ -52,7 +58,9 @@ export default function SlidesTable({
               <th className="px-5 py-3">Status</th>
               <th className="px-5 py-3">Size</th>
               <th className="px-5 py-3">Uploaded</th>
-              {(canView || canDelete) && <th className="px-5 py-3 text-right">Actions</th>}
+              {(canView || canShare || canDelete) && (
+                <th className="px-5 py-3 text-right">Actions</th>
+              )}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -68,7 +76,7 @@ export default function SlidesTable({
                   {formatFileSize(slide.file_size_bytes)}
                 </td>
                 <td className="px-5 py-4 text-slate-600">{formatDate(slide.created_at)}</td>
-                {(canView || canDelete) && (
+                {(canView || canShare || canDelete) && (
                   <td className="px-5 py-4 text-right">
                     <div className="flex justify-end gap-2">
                       {canView && (
@@ -78,6 +86,16 @@ export default function SlidesTable({
                         >
                           View
                         </Link>
+                      )}
+                      {canShare && (
+                        <button
+                          type="button"
+                          onClick={() => onShare(slide.id)}
+                          disabled={isSharing}
+                          className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          Share
+                        </button>
                       )}
                       {canDelete && (
                         <button

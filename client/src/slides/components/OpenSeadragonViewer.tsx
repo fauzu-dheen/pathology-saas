@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 type OpenSeadragonViewerProps = {
   dziUrl: string
   getTileUrl: (level: number, col: number, row: number) => string
+  useAuth?: boolean
 }
 
 type DziMetadata = {
@@ -13,10 +14,10 @@ type DziMetadata = {
   overlap: number
 }
 
-async function fetchDziMetadata(dziUrl: string): Promise<DziMetadata> {
+async function fetchDziMetadata(dziUrl: string, useAuth: boolean): Promise<DziMetadata> {
   const token = localStorage.getItem('access_token')
   const response = await fetch(dziUrl, {
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    headers: useAuth && token ? { Authorization: `Bearer ${token}` } : undefined,
   })
 
   if (!response.ok) throw new Error(`Unable to load slide metadata: ${response.status}`)
@@ -36,7 +37,11 @@ async function fetchDziMetadata(dziUrl: string): Promise<DziMetadata> {
   }
 }
 
-export default function OpenSeadragonViewer({ dziUrl, getTileUrl }: OpenSeadragonViewerProps) {
+export default function OpenSeadragonViewer({
+  dziUrl,
+  getTileUrl,
+  useAuth = true,
+}: OpenSeadragonViewerProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -46,7 +51,7 @@ export default function OpenSeadragonViewer({ dziUrl, getTileUrl }: OpenSeadrago
     const token = localStorage.getItem('access_token')
     let viewer: ReturnType<typeof OpenSeadragon> | null = null
 
-    fetchDziMetadata(dziUrl)
+    fetchDziMetadata(dziUrl, useAuth)
       .then((metadata) => {
         if (!containerRef.current || !isMounted) return
 
@@ -69,7 +74,7 @@ export default function OpenSeadragonViewer({ dziUrl, getTileUrl }: OpenSeadrago
           minZoomImageRatio: 0.9,
           visibilityRatio: 1,
           loadTilesWithAjax: true,
-          ajaxHeaders: token ? { Authorization: `Bearer ${token}` } : undefined,
+          ajaxHeaders: useAuth && token ? { Authorization: `Bearer ${token}` } : undefined,
         })
       })
       .catch(() => {
@@ -82,7 +87,7 @@ export default function OpenSeadragonViewer({ dziUrl, getTileUrl }: OpenSeadrago
       isMounted = false
       viewer?.destroy()
     }
-  }, [dziUrl, getTileUrl])
+  }, [dziUrl, getTileUrl, useAuth])
 
   return (
     <div
