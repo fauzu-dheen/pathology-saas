@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { createUser, deleteUser, listUsers, updateUser, updateUserPermissions } from './api'
+import { createUser, deleteUser, listUsers, updateUser } from './api'
 
 export const usersQueryKey = ['users'] as const
 
@@ -37,17 +37,6 @@ export function useDeleteUser() {
 
   return useMutation({
     mutationFn: deleteUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: usersQueryKey })
-    },
-  })
-}
-
-export function useUpdateUserPermissions() {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: updateUserPermissions,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: usersQueryKey })
     },

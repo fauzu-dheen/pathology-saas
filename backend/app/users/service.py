@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 
 from app import models
+from app.permissions import grant_permissions
 
 
 def list_users(db: Session, org_id: str) -> list[dict]:
@@ -64,13 +65,26 @@ def get_user_in_org(db: Session, org_id: str, user_id: str) -> models.User:
     return user
 
 
-def update_user(db: Session, org_id: str, user_id: str, name: str | None, is_admin: bool | None) -> None:
+def update_user(
+    db: Session,
+    org_id: str,
+    user_id: str,
+    name: str | None,
+    is_admin: bool | None,
+    permissions: list[str] | None,
+) -> None:
     user = get_user_in_org(db, org_id, user_id)
 
     if name is not None:
         user.name = name
     if is_admin is not None:
         user.is_admin = is_admin
+    if permissions is not None:
+        try:
+            grant_permissions(db, user.id, permissions)
+        except ValueError as e:
+            db.rollback()
+            raise HTTPException(status_code=400, detail=str(e))
 
     db.commit()
 

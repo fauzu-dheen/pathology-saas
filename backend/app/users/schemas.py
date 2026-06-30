@@ -11,6 +11,7 @@ class UserCreateRequest(BaseModel):
 class UserUpdateRequest(BaseModel):
     name: str | None = None
     is_admin: bool | None = None
+    permissions: list[str] | None = None
 
 
 class UserResponse(BaseModel):
@@ -23,7 +24,3 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
-
-
-class PermissionsUpdateRequest(BaseModel):
-    permissions: list[str]

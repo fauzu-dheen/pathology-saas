@@ -6,9 +6,7 @@ type UsersTableProps = {
   users: User[]
   isUpdating: boolean
   isDeleting: boolean
-  isUpdatingPermissions: boolean
-  onUpdate: (input: { id: string; name: string | null; is_admin: boolean }) => void
-  onUpdatePermissions: (input: { id: string; permissions: Permission[] }) => void
+  onUpdate: (input: { id: string; name: string | null; is_admin: boolean; permissions: Permission[] }) => void
   onDelete: (id: string) => void
 }
 
@@ -16,9 +14,7 @@ export default function UsersTable({
   users,
   isUpdating,
   isDeleting,
-  isUpdatingPermissions,
   onUpdate,
-  onUpdatePermissions,
   onDelete,
 }: UsersTableProps) {
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -53,9 +49,6 @@ export default function UsersTable({
       id,
       name: draftName.trim() || null,
       is_admin: draftIsAdmin,
-    })
-    onUpdatePermissions({
-      id,
       permissions: draftPermissions,
     })
     cancelEdit()
@@ -180,7 +173,7 @@ export default function UsersTable({
                         <button
                           type="button"
                           onClick={() => saveEdit(user.id)}
-                          disabled={isUpdating || isUpdatingPermissions}
+                          disabled={isUpdating}
                           className="rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           Save

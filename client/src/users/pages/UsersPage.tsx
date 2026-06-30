@@ -5,7 +5,6 @@ import {
   useCreateUser,
   useDeleteUser,
   useUpdateUser,
-  useUpdateUserPermissions,
   useUsers,
 } from '../hooks'
 
@@ -18,7 +17,6 @@ export default function UsersPage() {
   const usersQuery = useUsers()
   const createUser = useCreateUser()
   const updateUser = useUpdateUser()
-  const updateUserPermissions = useUpdateUserPermissions()
   const deleteUser = useDeleteUser()
 
   const handleDelete = (id: string) => {
@@ -70,12 +68,6 @@ export default function UsersPage() {
             {getErrorMessage(deleteUser.error)}
           </p>
         )}
-        {updateUserPermissions.error && (
-          <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {getErrorMessage(updateUserPermissions.error)}
-          </p>
-        )}
-
         {usersQuery.isLoading && (
           <div className="rounded-lg border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
             Loading users...
@@ -93,9 +85,7 @@ export default function UsersPage() {
             users={usersQuery.data}
             isUpdating={updateUser.isPending}
             isDeleting={deleteUser.isPending}
-            isUpdatingPermissions={updateUserPermissions.isPending}
             onUpdate={(input) => updateUser.mutate(input)}
-            onUpdatePermissions={(input) => updateUserPermissions.mutate(input)}
             onDelete={handleDelete}
           />
         )}

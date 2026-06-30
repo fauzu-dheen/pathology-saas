@@ -30,9 +30,5 @@ export type UpdateUserInput = {
   id: string
   name?: string | null
   is_admin?: boolean | null
-}
-
-export type UpdateUserPermissionsInput = {
-  id: string
-  permissions: Permission[]
+  permissions?: Permission[] | null
 }
