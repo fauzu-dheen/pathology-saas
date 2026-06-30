@@ -1,3 +1,4 @@
+import { Check, Eye, Pencil, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Report } from '../types'
@@ -118,45 +119,54 @@ export default function ReportsTable({
                             type="button"
                             onClick={() => saveEdit(report.id)}
                             disabled={isUpdating}
-                            className="clinical-primary rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                            className="clinical-icon-button clinical-primary"
+                            aria-label="Save report"
+                            title="Save"
                           >
-                            Save
+                            <Check className="size-4" strokeWidth={2} />
                           </button>
                           <button
                             type="button"
                             onClick={cancelEdit}
-                            className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
+                            className="clinical-icon-button clinical-secondary"
+                            aria-label="Cancel edit"
+                            title="Cancel"
                           >
-                            Cancel
+                            <X className="size-4" strokeWidth={2} />
                           </button>
                         </div>
                       ) : (
                         <div className="flex justify-end gap-2">
+                          {canViewSlides && (
+                            <Link
+                              to={`/reports/${report.id}/slides`}
+                              className="clinical-button clinical-secondary"
+                            >
+                              <Eye className="size-4" strokeWidth={2} />
+                              Slides
+                            </Link>
+                          )}
                           {canEdit && (
                             <button
                               type="button"
                               onClick={() => startEdit(report)}
-                              className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
+                              className="clinical-icon-button clinical-secondary"
+                              aria-label={`Edit ${report.title}`}
+                              title="Edit"
                             >
-                              Edit
+                              <Pencil className="size-4" strokeWidth={2} />
                             </button>
-                          )}
-                          {canViewSlides && (
-                            <Link
-                              to={`/reports/${report.id}/slides`}
-                              className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
-                            >
-                              Slides
-                            </Link>
                           )}
                           {canDelete && (
                             <button
                               type="button"
                               onClick={() => onDelete(report.id)}
                               disabled={isDeleting}
-                              className="clinical-danger rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                              className="clinical-icon-button clinical-danger"
+                              aria-label={`Delete ${report.title}`}
+                              title="Delete"
                             >
-                              Delete
+                              <Trash2 className="size-4" strokeWidth={2} />
                             </button>
                           )}
                         </div>

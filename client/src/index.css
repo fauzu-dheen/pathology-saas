@@ -106,3 +106,47 @@ select {
 .clinical-table tbody tr:hover {
   background: #f8fcfc;
 }
+
+.clinical-button {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+  line-height: 1;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.clinical-icon-button {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.clinical-button:disabled,
+.clinical-icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.clinical-auth-visual {
+  background:
+    linear-gradient(135deg, rgba(8, 47, 58, 0.96), rgba(15, 118, 110, 0.88)),
+    radial-gradient(circle at 20% 20%, rgba(190, 242, 242, 0.32), transparent 34%);
+}

@@ -43,10 +43,7 @@ export default function SlideUploadForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="clinical-card rounded-md p-5"
-    >
+    <form onSubmit={handleSubmit} className="clinical-card rounded-xl p-5">
       <div className="mb-5">
         <h2 className="text-base font-semibold text-[#102a35]">Upload SVS files</h2>
         <p className="mt-1 text-sm text-slate-600">
@@ -122,7 +119,7 @@ export default function SlideUploadForm({
         <button
           type="submit"
           disabled={isUploading || files.length === 0 || hasOversizedFiles}
-          className="clinical-primary rounded-md px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+          className="clinical-button clinical-primary"
         >
           {isUploading ? 'Uploading...' : 'Upload slides'}
         </button>

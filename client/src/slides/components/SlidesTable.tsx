@@ -1,3 +1,4 @@
+import { Eye, Share2, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import type { Slide } from '../types'
 
@@ -82,8 +83,9 @@ export default function SlidesTable({
                       {canView && (
                         <Link
                           to={`/reports/${reportId}/slides/${slide.id}/viewer`}
-                          className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
+                          className="clinical-button clinical-secondary"
                         >
+                          <Eye className="size-4" strokeWidth={2} />
                           View
                         </Link>
                       )}
@@ -92,9 +94,11 @@ export default function SlidesTable({
                           type="button"
                           onClick={() => onShare(slide.id)}
                           disabled={isSharing}
-                          className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                          className="clinical-icon-button clinical-secondary"
+                          aria-label={`Share ${slide.filename}`}
+                          title="Share"
                         >
-                          Share
+                          <Share2 className="size-4" strokeWidth={2} />
                         </button>
                       )}
                       {canDelete && (
@@ -102,9 +106,11 @@ export default function SlidesTable({
                           type="button"
                           onClick={() => onDelete(slide.id)}
                           disabled={isDeleting}
-                          className="clinical-danger rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                          className="clinical-icon-button clinical-danger"
+                          aria-label={`Delete ${slide.filename}`}
+                          title="Delete"
                         >
-                          Delete
+                          <Trash2 className="size-4" strokeWidth={2} />
                         </button>
                       )}
                     </div>

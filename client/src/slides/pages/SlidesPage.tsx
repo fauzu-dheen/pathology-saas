@@ -84,7 +84,7 @@ export default function SlidesPage() {
           </p>
           <Link
             to="/reports"
-            className="clinical-secondary inline-flex w-fit rounded-md px-3 py-2 text-sm font-medium"
+            className="clinical-button clinical-secondary w-fit"
           >
             Back to reports
           </Link>

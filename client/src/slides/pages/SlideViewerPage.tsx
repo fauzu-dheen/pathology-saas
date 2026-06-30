@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft, ClipboardList } from 'lucide-react'
 import { useCurrentUser } from '../../auth/hooks'
 import AppShell from '../../components/AppShell'
 import { useReports } from '../../reports/hooks'
@@ -51,14 +52,16 @@ export default function SlideViewerPage() {
         <div className="flex flex-wrap gap-2">
           <Link
             to={`/reports/${reportId}/slides`}
-            className="clinical-secondary rounded-md px-3 py-2 text-sm font-medium"
+            className="clinical-button clinical-secondary"
           >
+            <ArrowLeft className="size-4" strokeWidth={2} />
             Back to slides
           </Link>
           <Link
             to="/reports"
-            className="clinical-secondary rounded-md px-3 py-2 text-sm font-medium"
+            className="clinical-button clinical-secondary"
           >
+            <ClipboardList className="size-4" strokeWidth={2} />
             Reports
           </Link>
         </div>

@@ -1,3 +1,4 @@
+import { Check, Pencil, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
 import { ALL_PERMISSIONS } from '../types'
 import type { Permission, User } from '../types'
@@ -182,16 +183,20 @@ export default function UsersTable({
                             type="button"
                             onClick={() => saveEdit(user.id)}
                             disabled={isUpdating}
-                            className="clinical-primary rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                            className="clinical-icon-button clinical-primary"
+                            aria-label="Save user"
+                            title="Save"
                           >
-                            Save
+                            <Check className="size-4" strokeWidth={2} />
                           </button>
                           <button
                             type="button"
                             onClick={cancelEdit}
-                            className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
+                            className="clinical-icon-button clinical-secondary"
+                            aria-label="Cancel edit"
+                            title="Cancel"
                           >
-                            Cancel
+                            <X className="size-4" strokeWidth={2} />
                           </button>
                         </div>
                       ) : (
@@ -199,17 +204,21 @@ export default function UsersTable({
                           <button
                             type="button"
                             onClick={() => startEdit(user)}
-                            className="clinical-secondary rounded-md px-3 py-2 text-xs font-semibold"
+                            className="clinical-icon-button clinical-secondary"
+                            aria-label={`Edit ${user.name || user.email}`}
+                            title="Edit"
                           >
-                            Edit
+                            <Pencil className="size-4" strokeWidth={2} />
                           </button>
                           <button
                             type="button"
                             onClick={() => onDelete(user.id)}
                             disabled={isDeleting}
-                            className="clinical-danger rounded-md px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                            className="clinical-icon-button clinical-danger"
+                            aria-label={`Delete ${user.name || user.email}`}
+                            title="Delete"
                           >
-                            Delete
+                            <Trash2 className="size-4" strokeWidth={2} />
                           </button>
                         </div>
                       )}

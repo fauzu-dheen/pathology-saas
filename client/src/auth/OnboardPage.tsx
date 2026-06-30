@@ -1,3 +1,4 @@
+import { Building2, ClipboardList, Microscope, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
@@ -37,52 +38,77 @@ export default function OnboardPage() {
   }
 
   return (
-    <div className="clinical-page-bg flex min-h-screen items-center justify-center px-6">
-      <form
-        onSubmit={handleSubmit}
-        className="clinical-card w-full max-w-md space-y-5 rounded-md p-8"
-      >
-        <div>
-          <div className="mb-5 grid size-11 place-items-center rounded-md bg-[#082f3a]">
-            <div className="size-5 rounded-sm border-2 border-cyan-100 bg-teal-200/20" />
+    <div className="clinical-page-bg flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
+      <main className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-[#cfe0e5] bg-white shadow-2xl shadow-[#102a35]/10 lg:grid-cols-[0.95fr_1.05fr]">
+        <section className="clinical-auth-visual hidden min-h-[600px] flex-col justify-between p-10 text-white lg:flex">
+          <div>
+            <div className="grid size-12 place-items-center rounded-2xl border border-cyan-100/25 bg-white/10">
+              <Building2 className="size-6" strokeWidth={1.8} />
+            </div>
+            <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-cyan-50/75">
+              New Organization
+            </p>
+            <h1 className="mt-3 max-w-sm text-4xl font-semibold leading-tight">
+              Create a private workspace for your lab.
+            </h1>
           </div>
-          <p className="text-sm font-semibold text-[#0f766e]">First login</p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[#102a35]">
-            Set up your organization
-          </h1>
-          <p className="mt-2 text-sm text-slate-600">
-            This workspace will isolate your users, reports, and uploaded slides.
-          </p>
-        </div>
-        <label className="block">
-          <span className="text-sm font-medium text-slate-700">Organization name</span>
-          <input
-            className="clinical-input mt-2 w-full rounded-md px-3 py-2 outline-none"
-            placeholder="Acme Pathology"
-            value={orgName}
-            onChange={(e) => setOrgName(e.target.value)}
-            required
-          />
-        </label>
-        <label className="block">
-          <span className="text-sm font-medium text-slate-700">Organization slug</span>
-          <input
-            className="clinical-input mt-2 w-full rounded-md px-3 py-2 outline-none"
-            placeholder="acme-pathology"
-            value={orgSlug}
-            onChange={(e) => setOrgSlug(e.target.value.toLowerCase())}
-            pattern="[a-z0-9-]+"
-            required
-          />
-        </label>
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button
-          type="submit"
-          className="clinical-primary w-full rounded-md px-4 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#bdecea]"
-        >
-          Create organization
-        </button>
-      </form>
+
+          <div className="grid gap-3 text-sm text-cyan-50/85">
+            <div className="flex items-center gap-3 rounded-2xl bg-white/10 p-3">
+              <ShieldCheck className="size-5 text-cyan-100" strokeWidth={1.8} />
+              Admin access is granted automatically
+            </div>
+            <div className="flex items-center gap-3 rounded-2xl bg-white/10 p-3">
+              <ClipboardList className="size-5 text-cyan-100" strokeWidth={1.8} />
+              Reports and slides stay scoped to this organization
+            </div>
+          </div>
+        </section>
+
+        <section className="flex min-h-[600px] items-center p-6 sm:p-10">
+          <form onSubmit={handleSubmit} className="w-full space-y-5">
+            <div>
+              <div className="mb-5 grid size-12 place-items-center rounded-2xl bg-[#082f3a] text-white lg:hidden">
+                <Microscope className="size-6" strokeWidth={1.8} />
+              </div>
+              <p className="text-sm font-semibold text-[#0f766e]">First login</p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#102a35]">
+                Set up your organization
+              </h1>
+              <p className="mt-3 max-w-md text-sm leading-6 text-slate-600">
+                This creates your isolated clinical workspace for users, reports, and uploaded
+                slides.
+              </p>
+            </div>
+
+            <label className="block">
+              <span className="text-sm font-medium text-slate-700">Organization name</span>
+              <input
+                className="clinical-input mt-2 w-full rounded-xl px-3 py-3 outline-none"
+                placeholder="Acme Pathology"
+                value={orgName}
+                onChange={(e) => setOrgName(e.target.value)}
+                required
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium text-slate-700">Organization slug</span>
+              <input
+                className="clinical-input mt-2 w-full rounded-xl px-3 py-3 outline-none"
+                placeholder="acme-pathology"
+                value={orgSlug}
+                onChange={(e) => setOrgSlug(e.target.value.toLowerCase())}
+                pattern="[a-z0-9-]+"
+                required
+              />
+            </label>
+            {error && <p className="text-sm text-red-600">{error}</p>}
+            <button type="submit" className="clinical-button clinical-primary w-full">
+              Create organization
+            </button>
+          </form>
+        </section>
+      </main>
     </div>
   )
 }
