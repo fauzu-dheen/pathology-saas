@@ -89,25 +89,6 @@ export default function SlideUploadForm({
               style={{ width: `${progress.percent}%` }}
             />
           </div>
-
-          <div className="mt-4 space-y-3">
-            {progress.files.map((file) => (
-              <div key={file.name}>
-                <div className="flex items-center justify-between text-xs text-slate-600">
-                  <span className="max-w-[75%] truncate">{file.name}</span>
-                  <span>
-                    {file.status === 'complete' ? 'Complete' : `${file.percent}%`}
-                  </span>
-                </div>
-                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200">
-                  <div
-                    className="h-full rounded-full bg-[#14b8a6] transition-all"
-                    style={{ width: `${file.percent}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       )}
 
