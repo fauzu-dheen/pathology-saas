@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useCurrentUser } from '../../auth/hooks'
+import AppShell from '../../components/AppShell'
 import { useReports } from '../../reports/hooks'
 import { getSlideDziUrl, getSlideTileUrl } from '../api'
 import OpenSeadragonViewer from '../components/OpenSeadragonViewer'
@@ -26,51 +27,47 @@ export default function SlideViewerPage() {
 
   if (currentUserQuery.isLoading || reportsQuery.isLoading || slidesQuery.isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 p-8 text-sm text-slate-600">Loading viewer...</div>
+      <AppShell title="Slide viewer" maxWidth="wide">
+        <div className="rounded-md border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-sm">
+          Loading viewer...
+        </div>
+      </AppShell>
     )
   }
 
   if (!canView) {
     return (
-      <div className="min-h-screen bg-slate-50 p-8 text-sm text-red-700">
-        You do not have permission to view slides.
-      </div>
+      <AppShell title="Slide viewer" maxWidth="wide">
+        <div className="rounded-md border border-red-200 bg-red-50 p-8 text-sm text-red-700">
+          You do not have permission to view slides.
+        </div>
+      </AppShell>
     )
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div>
-            <p className="text-sm font-medium text-sky-700">{report?.title ?? 'Report'}</p>
-            <h1 className="text-xl font-semibold text-slate-950">
-              {slide?.filename ?? 'Slide viewer'}
-            </h1>
-          </div>
-          <div className="flex gap-2">
-            <Link
-              to={`/reports/${reportId}/slides`}
-              className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-            >
-              Slides
-            </Link>
-            <Link
-              to="/reports"
-              className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-            >
-              Reports
-            </Link>
-          </div>
+    <AppShell title={slide?.filename ?? 'Slide viewer'} eyebrow={report?.title ?? 'Report'} maxWidth="wide">
+      <div className="space-y-5">
+        <div className="flex flex-wrap gap-2">
+          <Link
+            to={`/reports/${reportId}/slides`}
+            className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            Back to slides
+          </Link>
+          <Link
+            to="/reports"
+            className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+          >
+            Reports
+          </Link>
         </div>
-      </header>
 
-      <main className="mx-auto max-w-7xl px-6 py-6">
         <OpenSeadragonViewer
           dziUrl={getSlideDziUrl(reportId, slideId)}
           getTileUrl={(level, col, row) => getSlideTileUrl(reportId, slideId, level, col, row)}
         />
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }

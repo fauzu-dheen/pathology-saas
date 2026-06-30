@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 type AppShellProps = {
   title: string
   eyebrow?: string
+  maxWidth?: 'standard' | 'wide'
   children: ReactNode
 }
 
@@ -12,7 +13,12 @@ const navItems = [
   { label: 'Users', to: '/users' },
 ]
 
-export default function AppShell({ title, eyebrow = 'Pathology SaaS', children }: AppShellProps) {
+export default function AppShell({
+  title,
+  eyebrow = 'Pathology SaaS',
+  maxWidth = 'standard',
+  children,
+}: AppShellProps) {
   const handleSignOut = () => {
     localStorage.removeItem('access_token')
     window.location.assign('/login')
@@ -63,7 +69,12 @@ export default function AppShell({ title, eyebrow = 'Pathology SaaS', children }
       </aside>
 
       <div className="flex-1 lg:pl-64">
-        <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <main
+          className={[
+            'mx-auto w-full px-4 py-6 sm:px-6 lg:px-8 lg:py-8',
+            maxWidth === 'wide' ? 'max-w-7xl' : 'max-w-6xl',
+          ].join(' ')}
+        >
           <div className="mb-6">
             <p className="text-sm font-medium text-slate-500">{eyebrow}</p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-950">{title}</h2>
