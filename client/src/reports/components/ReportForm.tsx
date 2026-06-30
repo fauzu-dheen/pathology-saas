@@ -38,7 +38,7 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             className="clinical-input mt-2 w-full rounded-md px-3 py-2 text-sm outline-none"
-            placeholder="Breast biopsy review"
+            placeholder="Diagnostic slide review"
           />
         </label>
 
