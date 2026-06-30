@@ -41,7 +41,7 @@ export default function AppShell({
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-cyan-100/70">
-                  Clinical Workspace
+                  Pathology SaaS
                 </p>
                 <h1 className="mt-0.5 text-lg font-semibold text-white">{organizationName}</h1>
                 {organizationSlug && (

@@ -76,7 +76,7 @@ export default function OnboardPage() {
                 Set up your organization
               </h1>
               <p className="mt-3 max-w-md text-sm leading-6 text-slate-600">
-                This creates your isolated clinical workspace for users, reports, and uploaded
+                This creates your isolated pathology workspace for users, reports, and uploaded
                 slides.
               </p>
             </div>
