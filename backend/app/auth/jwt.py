@@ -34,7 +34,8 @@ def create_pending_token(claims: dict) -> str:
         "email": claims["email"],
         "name": claims.get("name"),
         "type": "pending_onboarding",
-        "exp": datetime.now(timezone.utc) + timedelta(minutes=settings.pending_token_expires_minutes),
+        "exp": datetime.now(timezone.utc)
+        + timedelta(minutes=settings.pending_token_expires_minutes),
     }
     return jwt.encode(payload, settings.jwt_secret, algorithm=ALGORITHM)
 

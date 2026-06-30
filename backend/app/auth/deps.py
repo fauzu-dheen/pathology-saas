@@ -1,6 +1,7 @@
 from fastapi import Depends, Header, HTTPException
 from app.auth.jwt import decode_app_jwt
 
+
 def get_current_claims(authorization: str | None = Header(None)) -> dict:
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Missing or malformed Authorization header")

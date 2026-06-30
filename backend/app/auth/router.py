@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.db import get_db                      # changed: import instead of define
+from app.db import get_db  # changed: import instead of define
 from app.auth.google import verify_google_id_token
 from app.auth.deps import get_current_claims
 from app.auth import service

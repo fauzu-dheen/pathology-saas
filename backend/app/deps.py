@@ -15,4 +15,5 @@ def require_permission(permission: str):
         if not has_permission(db, user, permission):
             raise HTTPException(status_code=403, detail=f"Missing permission: {permission}")
         return user
+
     return checker

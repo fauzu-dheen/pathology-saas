@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     jwt_secret: str
     jwt_expires_minutes: int = 60 * 24 * 7  # 7 days
     pending_token_expires_minutes: int = 15
-    frontend_origin: str = "http://localhost:5173"  
-    
+    frontend_origin: str = "http://localhost:5173"
+
     model_config = SettingsConfigDict(env_file=".env")
 
 

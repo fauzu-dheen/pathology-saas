@@ -15,9 +15,7 @@ def list_users(db: Session, org_id: str) -> list[dict]:
     user_ids = [u.id for u in users]
 
     perm_rows = (
-        db.query(models.UserPermission)
-        .filter(models.UserPermission.user_id.in_(user_ids))
-        .all()
+        db.query(models.UserPermission).filter(models.UserPermission.user_id.in_(user_ids)).all()
     )
 
     perms_by_user: dict = defaultdict(set)
@@ -55,7 +53,10 @@ def create_user(db: Session, org_id: str, email: str, name: str | None) -> None:
         db.commit()
     except IntegrityError:
         db.rollback()
-        raise HTTPException(status_code=409, detail="A user with this email already exists in this organization")
+        raise HTTPException(
+            status_code=409,
+            detail="A user with this email already exists in this organization",
+        )
 
 
 def get_user_in_org(db: Session, org_id: str, user_id: str) -> models.User:

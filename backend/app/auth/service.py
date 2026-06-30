@@ -17,11 +17,7 @@ def resolve_google_login(db: Session, claims: dict) -> dict:
     user = db.query(models.User).filter_by(google_sub=claims["sub"]).first()
 
     if user is None:
-        user = (
-            db.query(models.User)
-            .filter_by(email=claims["email"], google_sub=None)
-            .first()
-        )
+        user = db.query(models.User).filter_by(email=claims["email"], google_sub=None).first()
         if user is not None:
             user.google_sub = claims["sub"]
             if not user.name and claims.get("name"):
@@ -31,10 +27,18 @@ def resolve_google_login(db: Session, claims: dict) -> dict:
 
     if user is None:
         pending_token = create_pending_token(claims)
-        return {"needs_onboarding": True, "pending_token": pending_token, "access_token": None}
+        return {
+            "needs_onboarding": True,
+            "pending_token": pending_token,
+            "access_token": None,
+        }
 
     access_token = create_app_jwt(user_id=user.id, org_id=user.organization_id)
-    return {"needs_onboarding": False, "access_token": access_token, "pending_token": None}
+    return {
+        "needs_onboarding": False,
+        "access_token": access_token,
+        "pending_token": None,
+    }
 
 
 def onboard_new_organization(db: Session, pending_token: str, org_name: str, org_slug: str) -> dict:
@@ -68,7 +72,11 @@ def onboard_new_organization(db: Session, pending_token: str, org_name: str, org
     db.refresh(user)
 
     access_token = create_app_jwt(user_id=user.id, org_id=org.id)
-    return {"needs_onboarding": False, "access_token": access_token, "pending_token": None}
+    return {
+        "needs_onboarding": False,
+        "access_token": access_token,
+        "pending_token": None,
+    }
 
 
 def get_user_for_claims(db: Session, claims: dict) -> models.User | None:

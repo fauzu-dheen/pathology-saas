@@ -5,11 +5,10 @@ from app.config import settings
 
 _request = google_requests.Request()
 
+
 def verify_google_id_token(token: str) -> dict:
     try:
-        idinfo = id_token.verify_oauth2_token(
-            token, _request, settings.google_client_id
-        )
+        idinfo = id_token.verify_oauth2_token(token, _request, settings.google_client_id)
     except ValueError:
         raise HTTPException(status_code=401, detail="Invalid Google token")
 
