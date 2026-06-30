@@ -4,6 +4,7 @@ import type { Permission, User } from '../types'
 
 type UsersTableProps = {
   users: User[]
+  canManageUsers: boolean
   isUpdating: boolean
   isDeleting: boolean
   onUpdate: (input: {
@@ -17,6 +18,7 @@ type UsersTableProps = {
 
 export default function UsersTable({
   users,
+  canManageUsers,
   isUpdating,
   isDeleting,
   onUpdate,
@@ -80,7 +82,7 @@ export default function UsersTable({
               <th className="px-5 py-3">Google linked</th>
               <th className="px-5 py-3">Access</th>
               <th className="px-5 py-3">Permissions</th>
-              <th className="px-5 py-3 text-right">Actions</th>
+              {canManageUsers && <th className="px-5 py-3 text-right">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -90,7 +92,7 @@ export default function UsersTable({
               return (
                 <tr key={user.id} className="align-top">
                   <td className="px-5 py-4">
-                    {isEditing ? (
+                    {isEditing && canManageUsers ? (
                       <div className="space-y-2">
                         <input
                           value={draftName}
@@ -119,7 +121,7 @@ export default function UsersTable({
                     </span>
                   </td>
                   <td className="px-5 py-4">
-                    {isEditing ? (
+                    {isEditing && canManageUsers ? (
                       <label className="inline-flex items-center gap-2 text-sm text-slate-700">
                         <input
                           type="checkbox"
@@ -134,7 +136,7 @@ export default function UsersTable({
                     )}
                   </td>
                   <td className="px-5 py-4">
-                    {isEditing ? (
+                    {isEditing && canManageUsers ? (
                       <div className="grid min-w-64 gap-2">
                         {ALL_PERMISSIONS.map((permission) => (
                           <label
@@ -172,45 +174,47 @@ export default function UsersTable({
                       </div>
                     )}
                   </td>
-                  <td className="px-5 py-4 text-right">
-                    {isEditing ? (
-                      <div className="flex justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => saveEdit(user.id)}
-                          disabled={isUpdating}
-                          className="rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                          Save
-                        </button>
-                        <button
-                          type="button"
-                          onClick={cancelEdit}
-                          className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => startEdit(user)}
-                          className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onDelete(user.id)}
-                          disabled={isDeleting}
-                          className="rounded-md border border-red-200 px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </td>
+                  {canManageUsers && (
+                    <td className="px-5 py-4 text-right">
+                      {isEditing ? (
+                        <div className="flex justify-end gap-2">
+                          <button
+                            type="button"
+                            onClick={() => saveEdit(user.id)}
+                            disabled={isUpdating}
+                            className="rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            Save
+                          </button>
+                          <button
+                            type="button"
+                            onClick={cancelEdit}
+                            className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex justify-end gap-2">
+                          <button
+                            type="button"
+                            onClick={() => startEdit(user)}
+                            className="rounded-md border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => onDelete(user.id)}
+                            disabled={isDeleting}
+                            className="rounded-md border border-red-200 px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  )}
                 </tr>
               )
             })}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useCurrentUser } from '../../auth/hooks'
 import UserForm from '../components/UserForm'
 import UsersTable from '../components/UsersTable'
 import { useCreateUser, useDeleteUser, useUpdateUser, useUsers } from '../hooks'
@@ -9,10 +10,12 @@ function getErrorMessage(error: unknown) {
 }
 
 export default function UsersPage() {
+  const currentUserQuery = useCurrentUser()
   const usersQuery = useUsers()
   const createUser = useCreateUser()
   const updateUser = useUpdateUser()
   const deleteUser = useDeleteUser()
+  const canManageUsers = currentUserQuery.data?.is_admin === true
 
   const handleDelete = (id: string) => {
     const confirmed = window.confirm('Delete this user from the organization?')
@@ -42,16 +45,19 @@ export default function UsersPage() {
             Organization users
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-slate-600">
-            Admins can pre-create users by email. When those users sign in with Google, their
-            account links to this organization automatically.
+            {canManageUsers
+              ? 'Admins can pre-create users by email. When those users sign in with Google, their account links to this organization automatically.'
+              : 'View organization users and their current access. Admin privileges are required to make changes.'}
           </p>
         </section>
 
-        <UserForm
-          isSubmitting={createUser.isPending}
-          error={createUser.error ? getErrorMessage(createUser.error) : null}
-          onSubmit={(input) => createUser.mutate(input)}
-        />
+        {canManageUsers && (
+          <UserForm
+            isSubmitting={createUser.isPending}
+            error={createUser.error ? getErrorMessage(createUser.error) : null}
+            onSubmit={(input) => createUser.mutate(input)}
+          />
+        )}
 
         {updateUser.error && (
           <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -78,6 +84,7 @@ export default function UsersPage() {
         {usersQuery.data && (
           <UsersTable
             users={usersQuery.data}
+            canManageUsers={canManageUsers}
             isUpdating={updateUser.isPending}
             isDeleting={deleteUser.isPending}
             onUpdate={(input) => updateUser.mutate(input)}
