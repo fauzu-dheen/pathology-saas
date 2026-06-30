@@ -7,7 +7,7 @@ from pydantic import BaseModel
 class SlideResponse(BaseModel):
     id: UUID
     report_id: UUID
-    owner_id: UUID
+    owner_id: UUID | None
     filename: str
     status: str
     file_size_bytes: int | None

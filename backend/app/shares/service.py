@@ -29,7 +29,7 @@ def create_share(
     share = models.SlideShare(
         organization_id=org_id,
         slide_id=slide_id,
-        created_by_user_id=user_id,
+        owner_id=user_id,
         expires_at=expires_at,
     )
     db.add(share)

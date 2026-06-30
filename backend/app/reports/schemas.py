@@ -18,7 +18,7 @@ class ReportResponse(BaseModel):
     id: UUID
     title: str
     description: str | None
-    owner_id: UUID
+    owner_id: UUID | None
     created_at: datetime
     updated_at: datetime
 
