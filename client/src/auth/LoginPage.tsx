@@ -39,7 +39,7 @@ export default function LoginPage() {
       <main className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-[#cfe0e5] bg-white shadow-2xl shadow-[#102a35]/10 lg:grid-cols-[1.05fr_0.95fr]">
         <section className="clinical-auth-visual hidden min-h-[560px] flex-col justify-between p-10 text-white lg:flex">
           <div>
-            <div className="grid size-12 place-items-center rounded-2xl border border-cyan-100/25 bg-white/10">
+            <div className="grid size-12 place-items-center rounded-2xl border border-cyan-100/20 bg-[#123f4a]">
               <Microscope className="size-6" strokeWidth={1.8} />
             </div>
             <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-cyan-50/75">
@@ -51,15 +51,15 @@ export default function LoginPage() {
           </div>
 
           <div className="grid gap-3 text-sm text-cyan-50/85">
-            <div className="flex items-center gap-3 rounded-2xl bg-white/10 p-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-cyan-100/10 bg-[#123f4a] p-3">
               <ShieldCheck className="size-5 text-cyan-100" strokeWidth={1.8} />
               Tenant-isolated access and permissions
             </div>
-            <div className="flex items-center gap-3 rounded-2xl bg-white/10 p-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-cyan-100/10 bg-[#123f4a] p-3">
               <FileText className="size-5 text-cyan-100" strokeWidth={1.8} />
               Reports and whole slide workflows
             </div>
-            <div className="flex items-center gap-3 rounded-2xl bg-white/10 p-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-cyan-100/10 bg-[#123f4a] p-3">
               <Users className="size-5 text-cyan-100" strokeWidth={1.8} />
               Simple team management
             </div>
