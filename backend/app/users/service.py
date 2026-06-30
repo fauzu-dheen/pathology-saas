@@ -36,7 +36,7 @@ def list_users(db: Session, org_id: str) -> list[dict]:
     ]
 
 
-def create_user(db: Session, org_id: str, email: str, name: str | None) -> models.User:
+def create_user(db: Session, org_id: str, email: str, name: str | None) -> None:
     """
     Pre-creates a user by email within the org, with no google_sub yet.
     They get linked automatically on their first Google sign-in
@@ -55,8 +55,6 @@ def create_user(db: Session, org_id: str, email: str, name: str | None) -> model
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=409, detail="A user with this email already exists in this organization")
-    db.refresh(user)
-    return user
 
 
 def get_user_in_org(db: Session, org_id: str, user_id: str) -> models.User:
@@ -66,7 +64,7 @@ def get_user_in_org(db: Session, org_id: str, user_id: str) -> models.User:
     return user
 
 
-def update_user(db: Session, org_id: str, user_id: str, name: str | None, is_admin: bool | None) -> models.User:
+def update_user(db: Session, org_id: str, user_id: str, name: str | None, is_admin: bool | None) -> None:
     user = get_user_in_org(db, org_id, user_id)
 
     if name is not None:
@@ -75,8 +73,6 @@ def update_user(db: Session, org_id: str, user_id: str, name: str | None, is_adm
         user.is_admin = is_admin
 
     db.commit()
-    db.refresh(user)
-    return user
 
 
 def delete_user(db: Session, org_id: str, user_id: str, acting_admin_id: str) -> None:

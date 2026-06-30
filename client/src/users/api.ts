@@ -6,14 +6,14 @@ export function listUsers() {
 }
 
 export function createUser(input: CreateUserInput) {
-  return apiFetch<User>('/users', {
+  return apiFetch<void>('/users', {
     method: 'POST',
     body: JSON.stringify(input),
   })
 }
 
 export function updateUser({ id, ...input }: UpdateUserInput) {
-  return apiFetch<User>(`/users/${id}`, {
+  return apiFetch<void>(`/users/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(input),
   })
