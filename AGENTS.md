@@ -236,10 +236,10 @@ this explicitly during setup.
 - [x] Create agent build tracker
 - [ ] Create basic README
 - [ ] Document setup instructions
-- [ ] Document environment variables
+- [x] Document environment variables
 - [ ] Document database migrations
 - [ ] Document assumptions and trade-offs
-- [ ] Add deployment instructions
+- [x] Add deployment config
 - [ ] Deploy live version
 
 ## Expected Environment Variables

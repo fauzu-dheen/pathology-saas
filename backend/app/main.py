@@ -21,3 +21,8 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(reports_router)
 app.include_router(slides_router)
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
