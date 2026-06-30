@@ -40,7 +40,9 @@ def get_shared_slide_meta(token: str, db: Session = Depends(get_db)):
 @public_router.get("/{token}/dzi.xml")
 def get_shared_dzi(token: str, db: Session = Depends(get_db)):
     slide = service.resolve_share_token(db, token)
-    xml = viewer.get_dzi_xml(slide.storage_path)
+    storage_path = slide.storage_path
+    db.close()
+    xml = viewer.get_dzi_xml(storage_path)
     return Response(
         content=xml,
         media_type="application/xml",
@@ -51,7 +53,9 @@ def get_shared_dzi(token: str, db: Session = Depends(get_db)):
 @public_router.get("/{token}/tiles/{level}/{col}_{row}.jpeg")
 def get_shared_tile(token: str, level: int, col: int, row: int, db: Session = Depends(get_db)):
     slide = service.resolve_share_token(db, token)
-    tile_bytes = viewer.get_tile_bytes(slide.storage_path, level, col, row)
+    storage_path = slide.storage_path
+    db.close()
+    tile_bytes = viewer.get_tile_bytes(storage_path, level, col, row)
     return Response(
         content=tile_bytes,
         media_type="image/jpeg",

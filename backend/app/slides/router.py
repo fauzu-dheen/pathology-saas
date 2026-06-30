@@ -48,7 +48,9 @@ def get_slide_dzi(
     db: Session = Depends(get_db),
 ):
     slide = service.get_slide_for_report_in_org(db, user.organization_id, report_id, slide_id)
-    xml = viewer.get_dzi_xml(slide.storage_path)
+    storage_path = slide.storage_path
+    db.close()
+    xml = viewer.get_dzi_xml(storage_path)
     return Response(content=xml, media_type="application/xml")
 
 
@@ -63,5 +65,7 @@ def get_slide_tile(
     db: Session = Depends(get_db),
 ):
     slide = service.get_slide_for_report_in_org(db, user.organization_id, report_id, slide_id)
-    tile_bytes = viewer.get_tile_bytes(slide.storage_path, level, col, row)
+    storage_path = slide.storage_path
+    db.close()
+    tile_bytes = viewer.get_tile_bytes(storage_path, level, col, row)
     return Response(content=tile_bytes, media_type="image/jpeg")

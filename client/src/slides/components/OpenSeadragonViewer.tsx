@@ -67,6 +67,7 @@ export default function OpenSeadragonViewer({
           },
           showNavigator: true,
           showRotationControl: true,
+          imageLoaderLimit: 4,
           animationTime: 0.4,
           blendTime: 0.1,
           constrainDuringPan: true,
