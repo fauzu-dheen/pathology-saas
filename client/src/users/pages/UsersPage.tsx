@@ -65,6 +65,7 @@ export default function UsersPage() {
           <UsersTable
             users={usersQuery.data}
             canManageUsers={canManageUsers}
+            currentUserId={currentUserQuery.data?.user_id ?? null}
             isUpdating={updateUser.isPending}
             isDeleting={deleteUser.isPending}
             onUpdate={(input) => updateUser.mutate(input)}

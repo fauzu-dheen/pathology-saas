@@ -6,6 +6,7 @@ import type { Permission, User } from '../types'
 type UsersTableProps = {
   users: User[]
   canManageUsers: boolean
+  currentUserId: string | null
   isUpdating: boolean
   isDeleting: boolean
   onUpdate: (input: {
@@ -20,6 +21,7 @@ type UsersTableProps = {
 export default function UsersTable({
   users,
   canManageUsers,
+  currentUserId,
   isUpdating,
   isDeleting,
   onUpdate,
@@ -89,6 +91,7 @@ export default function UsersTable({
           <tbody className="divide-y divide-slate-100">
             {users.map((user) => {
               const isEditing = editingId === user.id
+              const isCurrentUser = currentUserId === user.id
 
               return (
                 <tr key={user.id} className="align-top">
@@ -210,16 +213,18 @@ export default function UsersTable({
                           >
                             <Pencil className="size-4" strokeWidth={2} />
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => onDelete(user.id)}
-                            disabled={isDeleting}
-                            className="clinical-icon-button clinical-danger"
-                            aria-label={`Delete ${user.name || user.email}`}
-                            title="Delete"
-                          >
-                            <Trash2 className="size-4" strokeWidth={2} />
-                          </button>
+                          {!isCurrentUser && (
+                            <button
+                              type="button"
+                              onClick={() => onDelete(user.id)}
+                              disabled={isDeleting}
+                              className="clinical-icon-button clinical-danger"
+                              aria-label={`Delete ${user.name || user.email}`}
+                              title="Delete"
+                            >
+                              <Trash2 className="size-4" strokeWidth={2} />
+                            </button>
+                          )}
                         </div>
                       )}
                     </td>
