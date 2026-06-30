@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, UploadFile, File
+from fastapi import APIRouter, Depends, UploadFile, File, Response
 from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.deps import require_permission
-from app.slides import service
+from app.slides import service, viewer
 from app.slides.schemas import SlideResponse
 from app import models
 
@@ -38,3 +38,30 @@ def delete_slide(
     db: Session = Depends(get_db),
 ):
     service.delete_slide(db, user.organization_id, slide_id)
+
+
+@router.get("/{slide_id}/dzi.xml")
+def get_slide_dzi(
+    report_id: str,
+    slide_id: str,
+    user: models.User = Depends(require_permission("slides:view")),
+    db: Session = Depends(get_db),
+):
+    slide = service.get_slide_in_org(db, user.organization_id, slide_id)
+    xml = viewer.get_dzi_xml(slide.storage_path)
+    return Response(content=xml, media_type="application/xml")
+
+
+@router.get("/{slide_id}/tiles/{level}/{col}_{row}.jpeg")
+def get_slide_tile(
+    report_id: str,
+    slide_id: str,
+    level: int,
+    col: int,
+    row: int,
+    user: models.User = Depends(require_permission("slides:view")),
+    db: Session = Depends(get_db),
+):
+    slide = service.get_slide_in_org(db, user.organization_id, slide_id)
+    tile_bytes = viewer.get_tile_bytes(slide.storage_path, level, col, row)
+    return Response(content=tile_bytes, media_type="image/jpeg")
