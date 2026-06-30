@@ -58,7 +58,7 @@ export default function ReportsTable({
 
   if (reports.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
+      <div className="rounded-md border border-dashed border-slate-300 bg-white p-8 text-center">
         <h2 className="text-base font-semibold text-slate-950">No reports yet</h2>
         <p className="mt-1 text-sm text-slate-600">
           Create the first report to start attaching whole slide images.
@@ -68,7 +68,7 @@ export default function ReportsTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
           <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -91,12 +91,12 @@ export default function ReportsTable({
                         <input
                           value={draftTitle}
                           onChange={(event) => setDraftTitle(event.target.value)}
-                          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
                         />
                         <textarea
                           value={draftDescription}
                           onChange={(event) => setDraftDescription(event.target.value)}
-                          className="min-h-20 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                          className="min-h-20 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
                         />
                       </div>
                     ) : (
@@ -118,7 +118,7 @@ export default function ReportsTable({
                             type="button"
                             onClick={() => saveEdit(report.id)}
                             disabled={isUpdating}
-                            className="rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded-md bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             Save
                           </button>

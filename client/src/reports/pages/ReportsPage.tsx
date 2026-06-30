@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { useCurrentUser } from '../../auth/hooks'
+import AppShell from '../../components/AppShell'
 import ReportForm from '../components/ReportForm'
 import ReportsTable from '../components/ReportsTable'
 import { useCreateReport, useDeleteReport, useReports, useUpdateReport } from '../hooks'
@@ -35,31 +35,11 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div>
-            <p className="text-sm font-medium text-sky-700">Pathology SaaS</p>
-            <h1 className="text-xl font-semibold text-slate-950">Reports</h1>
-          </div>
-          <Link
-            to="/dashboard"
-            className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-          >
-            Dashboard
-          </Link>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl space-y-6 px-6 py-8">
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
-            Pathology reports
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm text-slate-600">
-            Create and manage report records. Slide upload and viewing will attach to these reports.
-          </p>
-        </section>
+    <AppShell title="Reports">
+      <div className="space-y-5">
+        <p className="max-w-2xl text-sm text-slate-600">
+          Create and manage pathology reports for the organization.
+        </p>
 
         {canCreate && (
           <ReportForm
@@ -104,7 +84,7 @@ export default function ReportsPage() {
             onDelete={handleDelete}
           />
         )}
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }

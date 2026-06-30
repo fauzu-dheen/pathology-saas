@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { useCurrentUser } from '../../auth/hooks'
+import AppShell from '../../components/AppShell'
 import UserForm from '../components/UserForm'
 import UsersTable from '../components/UsersTable'
 import { useCreateUser, useDeleteUser, useUpdateUser, useUsers } from '../hooks'
@@ -23,33 +23,13 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div>
-            <p className="text-sm font-medium text-sky-700">Pathology SaaS</p>
-            <h1 className="text-xl font-semibold text-slate-950">Users</h1>
-          </div>
-          <Link
-            to="/dashboard"
-            className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-          >
-            Dashboard
-          </Link>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl space-y-6 px-6 py-8">
-        <section>
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
-            Organization users
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm text-slate-600">
-            {canManageUsers
-              ? 'Admins can pre-create users by email. When those users sign in with Google, their account links to this organization automatically.'
-              : 'View organization users and their current access. Admin privileges are required to make changes.'}
-          </p>
-        </section>
+    <AppShell title="Users">
+      <div className="space-y-5">
+        <p className="max-w-2xl text-sm text-slate-600">
+          {canManageUsers
+            ? 'Add users by email and manage their access.'
+            : 'View organization users and their access.'}
+        </p>
 
         {canManageUsers && (
           <UserForm
@@ -91,7 +71,7 @@ export default function UsersPage() {
             onDelete={handleDelete}
           />
         )}
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }

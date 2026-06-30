@@ -63,7 +63,7 @@ export default function UsersTable({
 
   if (users.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
+      <div className="rounded-md border border-dashed border-slate-300 bg-white p-8 text-center">
         <h2 className="text-base font-semibold text-slate-950">No users yet</h2>
         <p className="mt-1 text-sm text-slate-600">
           Create the first non-admin user to start building the organization roster.
@@ -73,7 +73,7 @@ export default function UsersTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
           <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -97,7 +97,7 @@ export default function UsersTable({
                         <input
                           value={draftName}
                           onChange={(event) => setDraftName(event.target.value)}
-                          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
                           placeholder="Name"
                         />
                         <p className="text-xs text-slate-500">{user.email}</p>
@@ -127,7 +127,7 @@ export default function UsersTable({
                           type="checkbox"
                           checked={draftIsAdmin}
                           onChange={(event) => setDraftIsAdmin(event.target.checked)}
-                          className="size-4 rounded border-slate-300 text-sky-700 focus:ring-sky-200"
+                          className="size-4 rounded border-slate-300 text-slate-900 focus:ring-slate-200"
                         />
                         Admin
                       </label>
@@ -147,7 +147,7 @@ export default function UsersTable({
                               type="checkbox"
                               checked={draftPermissions.includes(permission)}
                               onChange={() => togglePermission(permission)}
-                              className="size-4 rounded border-slate-300 text-sky-700 focus:ring-sky-200"
+                              className="size-4 rounded border-slate-300 text-slate-900 focus:ring-slate-200"
                             />
                             {permission}
                           </label>
@@ -156,7 +156,7 @@ export default function UsersTable({
                     ) : (
                       <div className="flex max-w-80 flex-wrap gap-1.5">
                         {user.is_admin ? (
-                          <span className="rounded-full bg-sky-50 px-2 py-1 text-xs font-medium text-sky-700">
+                          <span className="rounded-full bg-slate-900 px-2 py-1 text-xs font-medium text-white">
                             All permissions
                           </span>
                         ) : user.permissions.length > 0 ? (
@@ -182,7 +182,7 @@ export default function UsersTable({
                             type="button"
                             onClick={() => saveEdit(user.id)}
                             disabled={isUpdating}
-                            className="rounded-md bg-sky-700 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded-md bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             Save
                           </button>

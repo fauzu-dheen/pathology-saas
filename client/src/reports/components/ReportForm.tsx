@@ -24,12 +24,12 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
+      className="rounded-md border border-slate-200 bg-white p-5 shadow-sm"
     >
       <div className="mb-5">
         <h2 className="text-base font-semibold text-slate-950">Create report</h2>
         <p className="mt-1 text-sm text-slate-600">
-          Add a report record. SVS uploads will attach to reports in the slide workflow.
+          Add a report record for cases and slide work.
         </p>
       </div>
 
@@ -40,7 +40,7 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
             required
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
             placeholder="Breast biopsy review"
           />
         </label>
@@ -50,7 +50,7 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
           <textarea
             value={description}
             onChange={(event) => setDescription(event.target.value)}
-            className="mt-2 min-h-24 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            className="mt-2 min-h-24 w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-950 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100"
             placeholder="Optional clinical notes or case context"
           />
         </label>
@@ -62,7 +62,7 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-sky-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? 'Creating...' : 'Create report'}
         </button>
