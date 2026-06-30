@@ -1,3 +1,4 @@
+from collections import defaultdict
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
@@ -5,8 +6,34 @@ from fastapi import HTTPException
 from app import models
 
 
-def list_users(db: Session, org_id: str) -> list[models.User]:
-    return db.query(models.User).filter_by(organization_id=org_id).all()
+def list_users(db: Session, org_id: str) -> list[dict]:
+    users = db.query(models.User).filter_by(organization_id=org_id).all()
+    if not users:
+        return []
+
+    user_ids = [u.id for u in users]
+
+    perm_rows = (
+        db.query(models.UserPermission)
+        .filter(models.UserPermission.user_id.in_(user_ids))
+        .all()
+    )
+
+    perms_by_user: dict = defaultdict(set)
+    for row in perm_rows:
+        perms_by_user[row.user_id].add(row.permission)
+
+    return [
+        {
+            "id": str(u.id),
+            "email": u.email,
+            "name": u.name,
+            "is_admin": u.is_admin,
+            "google_sub": u.google_sub,
+            "permissions": sorted(perms_by_user.get(u.id, set())),
+        }
+        for u in users
+    ]
 
 
 def create_user(db: Session, org_id: str, email: str, name: str | None) -> models.User:

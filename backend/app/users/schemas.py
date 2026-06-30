@@ -18,7 +18,12 @@ class UserResponse(BaseModel):
     email: str
     name: str | None
     is_admin: bool
-    google_sub: str | None  # null = pre-created, not yet linked to a Google login
+    google_sub: str | None
+    permissions: list[str]
 
     class Config:
         from_attributes = True
+
+
+class PermissionsUpdateRequest(BaseModel):
+    permissions: list[str]

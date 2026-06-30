@@ -32,8 +32,23 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now_utc)
 
     organization: Mapped["Organization"] = relationship(back_populates="users")
+    permissions: Mapped[list["UserPermission"]] = relationship(
+        back_populates=None, cascade="all, delete-orphan"
+    )
 
     __table_args__ = (UniqueConstraint("organization_id", "email", name="uq_user_org_email"),) 
     # one email per org — same person could theoretically exist in two orgs as
     # two separate rows (pre-created by two different admins); that's acceptable
     # given each org is fully isolated
+
+
+class UserPermission(Base):
+    __tablename__ = "user_permissions"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    permission: Mapped[str] = mapped_column(String, nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint("user_id", "permission", name="uq_user_permission"),
+    )
