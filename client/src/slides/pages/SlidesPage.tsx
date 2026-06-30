@@ -22,17 +22,19 @@ export default function SlidesPage() {
   const { reportId } = useParams()
   const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null)
   const currentUserQuery = useCurrentUser()
-  const reportsQuery = useReports()
-  const slidesQuery = useSlides(reportId)
+  const currentUser = currentUserQuery.data
+  const canView = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
+  const canViewReports =
+    currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:view')
+  const reportsQuery = useReports(canViewReports === true)
+  const slidesQuery = useSlides(reportId, canView === true)
   const uploadSlides = useUploadSlides(reportId)
   const deleteSlide = useDeleteSlide(reportId)
   const createShare = useCreateShare()
 
-  const currentUser = currentUserQuery.data
   const report = reportsQuery.data?.find((item) => item.id === reportId)
   const canUpload =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:upload')
-  const canView = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
   const canShare = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:share')
   const canDelete =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:delete')
@@ -90,7 +92,7 @@ export default function SlidesPage() {
           </Link>
         </div>
 
-        {canUpload && (
+        {canView && canUpload && (
           <SlideUploadForm
             isUploading={uploadSlides.isPending}
             progress={uploadProgress}
@@ -99,30 +101,46 @@ export default function SlidesPage() {
           />
         )}
 
-        {deleteSlide.error && (
+        {currentUserQuery.isLoading && (
+          <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
+            Checking slide access...
+          </div>
+        )}
+
+        {currentUser && !canView && (
+          <div className="clinical-card rounded-md p-8">
+            <h2 className="text-base font-semibold text-[#102a35]">Slides access required</h2>
+            <p className="mt-2 max-w-xl text-sm text-slate-600">
+              You do not have permission to view slides for this report. Ask an organization admin
+              to grant slides:view access.
+            </p>
+          </div>
+        )}
+
+        {canView && deleteSlide.error && (
           <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {getErrorMessage(deleteSlide.error)}
           </p>
         )}
-        {createShare.error && (
+        {canView && createShare.error && (
           <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {getErrorMessage(createShare.error)}
           </p>
         )}
 
-        {slidesQuery.isLoading && (
+        {canView && slidesQuery.isLoading && (
           <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
             Loading slides...
           </div>
         )}
 
-        {slidesQuery.error && (
+        {canView && slidesQuery.error && (
           <div className="rounded-md border border-red-200 bg-red-50 p-8 text-sm text-red-700">
             {getErrorMessage(slidesQuery.error)}
           </div>
         )}
 
-        {slidesQuery.data && (
+        {canView && slidesQuery.data && (
           <SlidesTable
             reportId={reportId}
             slides={slidesQuery.data}

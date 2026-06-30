@@ -14,23 +14,25 @@ function hasPermission(permissions: string[] | undefined, permission: string) {
 export default function SlideViewerPage() {
   const { reportId, slideId } = useParams()
   const currentUserQuery = useCurrentUser()
-  const reportsQuery = useReports()
-  const slidesQuery = useSlides(reportId)
-
   const currentUser = currentUserQuery.data
+  const canView = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
+  const canViewReports =
+    currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:view')
+  const reportsQuery = useReports(canView === true && canViewReports === true)
+  const slidesQuery = useSlides(reportId, canView === true)
+
   const report = reportsQuery.data?.find((item) => item.id === reportId)
   const slide = slidesQuery.data?.find((item) => item.id === slideId)
-  const canView = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
 
   if (!reportId || !slideId) {
     return <div className="p-8 text-sm text-red-700">Missing slide route parameters.</div>
   }
 
-  if (currentUserQuery.isLoading || reportsQuery.isLoading || slidesQuery.isLoading) {
+  if (currentUserQuery.isLoading) {
     return (
       <AppShell title="Slide viewer" maxWidth="wide">
         <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
-          Loading viewer...
+          Checking slide access...
         </div>
       </AppShell>
     )
@@ -39,8 +41,22 @@ export default function SlideViewerPage() {
   if (!canView) {
     return (
       <AppShell title="Slide viewer" maxWidth="wide">
-        <div className="rounded-md border border-red-200 bg-red-50 p-8 text-sm text-red-700">
-          You do not have permission to view slides.
+        <div className="clinical-card rounded-md p-8">
+          <h2 className="text-base font-semibold text-[#102a35]">Slides access required</h2>
+          <p className="mt-2 max-w-xl text-sm text-slate-600">
+            You do not have permission to view this slide. Ask an organization admin to grant
+            slides:view access.
+          </p>
+        </div>
+      </AppShell>
+    )
+  }
+
+  if (reportsQuery.isLoading || slidesQuery.isLoading) {
+    return (
+      <AppShell title="Slide viewer" maxWidth="wide">
+        <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
+          Loading viewer...
         </div>
       </AppShell>
     )

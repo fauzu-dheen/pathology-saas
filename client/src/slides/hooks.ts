@@ -5,11 +5,11 @@ export function slidesQueryKey(reportId: string) {
   return ['reports', reportId, 'slides'] as const
 }
 
-export function useSlides(reportId: string | undefined) {
+export function useSlides(reportId: string | undefined, enabled = true) {
   return useQuery({
     queryKey: slidesQueryKey(reportId ?? ''),
     queryFn: () => listSlides(reportId ?? ''),
-    enabled: Boolean(reportId),
+    enabled: Boolean(reportId) && enabled,
   })
 }
 

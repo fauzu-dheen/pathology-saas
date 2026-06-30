@@ -3,10 +3,11 @@ import { createReport, deleteReport, listReports, updateReport } from './api'
 
 export const reportsQueryKey = ['reports'] as const
 
-export function useReports() {
+export function useReports(enabled = true) {
   return useQuery({
     queryKey: reportsQueryKey,
     queryFn: listReports,
+    enabled,
   })
 }
 

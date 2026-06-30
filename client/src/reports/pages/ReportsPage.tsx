@@ -15,12 +15,14 @@ function hasPermission(permissions: string[] | undefined, permission: string) {
 
 export default function ReportsPage() {
   const currentUserQuery = useCurrentUser()
-  const reportsQuery = useReports()
+  const currentUser = currentUserQuery.data
+  const canViewReports =
+    currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:view')
+  const reportsQuery = useReports(canViewReports === true)
   const createReport = useCreateReport()
   const updateReport = useUpdateReport()
   const deleteReport = useDeleteReport()
 
-  const currentUser = currentUserQuery.data
   const canCreate =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:create')
   const canEdit = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:edit')
@@ -41,7 +43,7 @@ export default function ReportsPage() {
           Create and manage pathology reports for the organization.
         </p>
 
-        {canCreate && (
+        {canViewReports && canCreate && (
           <ReportForm
             isSubmitting={createReport.isPending}
             error={createReport.error ? getErrorMessage(createReport.error) : null}
@@ -49,30 +51,46 @@ export default function ReportsPage() {
           />
         )}
 
-        {updateReport.error && (
+        {currentUserQuery.isLoading && (
+          <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
+            Checking report access...
+          </div>
+        )}
+
+        {currentUser && !canViewReports && (
+          <div className="clinical-card rounded-md p-8">
+            <h2 className="text-base font-semibold text-[#102a35]">Reports access required</h2>
+            <p className="mt-2 max-w-xl text-sm text-slate-600">
+              You do not have permission to view reports. Ask an organization admin to grant
+              reports:view access.
+            </p>
+          </div>
+        )}
+
+        {canViewReports && updateReport.error && (
           <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {getErrorMessage(updateReport.error)}
           </p>
         )}
-        {deleteReport.error && (
+        {canViewReports && deleteReport.error && (
           <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {getErrorMessage(deleteReport.error)}
           </p>
         )}
 
-        {reportsQuery.isLoading && (
+        {canViewReports && reportsQuery.isLoading && (
           <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
             Loading reports...
           </div>
         )}
 
-        {reportsQuery.error && (
+        {canViewReports && reportsQuery.error && (
           <div className="rounded-md border border-red-200 bg-red-50 p-8 text-sm text-red-700">
             {getErrorMessage(reportsQuery.error)}
           </div>
         )}
 
-        {reportsQuery.data && (
+        {canViewReports && reportsQuery.data && (
           <ReportsTable
             reports={reportsQuery.data}
             canViewSlides={canViewSlides === true}
