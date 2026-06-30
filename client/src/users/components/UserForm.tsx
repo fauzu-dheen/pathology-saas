@@ -57,11 +57,7 @@ export default function UserForm({ isSubmitting, error, onSubmit }: UserFormProp
       {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
       <div className="mt-5 flex justify-end">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="clinical-button clinical-primary"
-        >
+        <button type="submit" disabled={isSubmitting} className="clinical-button clinical-primary">
           {isSubmitting ? 'Creating...' : 'Create user'}
         </button>
       </div>

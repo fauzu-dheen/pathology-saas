@@ -25,9 +25,7 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
     <form onSubmit={handleSubmit} className="clinical-card rounded-xl p-5">
       <div className="mb-5">
         <h2 className="text-base font-semibold text-[#102a35]">Create report</h2>
-        <p className="mt-1 text-sm text-slate-600">
-          Add a report record for cases and slide work.
-        </p>
+        <p className="mt-1 text-sm text-slate-600">Add a report record for cases and slide work.</p>
       </div>
 
       <div className="grid gap-4">
@@ -56,11 +54,7 @@ export default function ReportForm({ isSubmitting, error, onSubmit }: ReportForm
       {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
       <div className="mt-5 flex justify-end">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="clinical-button clinical-primary"
-        >
+        <button type="submit" disabled={isSubmitting} className="clinical-button clinical-primary">
           {isSubmitting ? 'Creating...' : 'Create report'}
         </button>
       </div>

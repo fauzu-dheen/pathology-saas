@@ -20,11 +20,7 @@ function emitUploadProgress(
   })
 }
 
-function uploadSlideFile(
-  reportId: string,
-  file: File,
-  onProgress: (loaded: number) => void,
-) {
+function uploadSlideFile(reportId: string, file: File, onProgress: (loaded: number) => void) {
   const token = localStorage.getItem('access_token')
   const formData = new FormData()
   formData.append('file', file)

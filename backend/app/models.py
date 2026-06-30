@@ -7,6 +7,7 @@ from app.db import Base
 from app import models  # noqa: F401 — registers all models on Base.metadata
 import secrets
 
+
 def now_utc():
     return datetime.now(timezone.utc)
 
@@ -101,6 +102,7 @@ class Slide(Base):
     shares: Mapped[list["SlideShare"]] = relationship(
         back_populates="slide", cascade="all, delete-orphan", passive_deletes=True
     )
+
 
 class SlideShare(Base):
     __tablename__ = "slide_shares"

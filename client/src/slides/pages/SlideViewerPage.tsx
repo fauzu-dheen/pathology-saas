@@ -55,28 +55,24 @@ export default function SlideViewerPage() {
   if (reportsQuery.isLoading || slidesQuery.isLoading) {
     return (
       <AppShell title="Slide viewer" maxWidth="wide">
-        <div className="clinical-card rounded-md p-8 text-sm text-slate-600">
-          Loading viewer...
-        </div>
+        <div className="clinical-card rounded-md p-8 text-sm text-slate-600">Loading viewer...</div>
       </AppShell>
     )
   }
 
   return (
-    <AppShell title={slide?.filename ?? 'Slide viewer'} eyebrow={report?.title ?? 'Report'} maxWidth="wide">
+    <AppShell
+      title={slide?.filename ?? 'Slide viewer'}
+      eyebrow={report?.title ?? 'Report'}
+      maxWidth="wide"
+    >
       <div className="space-y-5">
         <div className="flex flex-wrap gap-2">
-          <Link
-            to={`/reports/${reportId}/slides`}
-            className="clinical-button clinical-secondary"
-          >
+          <Link to={`/reports/${reportId}/slides`} className="clinical-button clinical-secondary">
             <ArrowLeft className="size-4" strokeWidth={2} />
             Back to slides
           </Link>
-          <Link
-            to="/reports"
-            className="clinical-button clinical-secondary"
-          >
+          <Link to="/reports" className="clinical-button clinical-secondary">
             <ClipboardList className="size-4" strokeWidth={2} />
             Reports
           </Link>

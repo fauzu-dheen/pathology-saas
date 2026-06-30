@@ -34,7 +34,9 @@ public_router = APIRouter(prefix="/shared", tags=["shared"])
 def get_shared_slide_meta(token: str, db: Session = Depends(get_db)):
     slide = service.resolve_share_token(db, token)
     report = db.query(models.Report).filter_by(id=slide.report_id).first()
-    return SharedSlideMetaResponse(filename=slide.filename, report_title=report.title if report else "")
+    return SharedSlideMetaResponse(
+        filename=slide.filename, report_title=report.title if report else ""
+    )
 
 
 @public_router.get("/{token}/dzi.xml")

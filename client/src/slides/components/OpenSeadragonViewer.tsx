@@ -170,7 +170,9 @@ export default function OpenSeadragonViewer({
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#082f3a]">
           <div className="flex flex-col items-center gap-4 text-white">
             <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-[#7dd3c7]" />
-            <div className="text-sm font-medium tracking-wide text-white/80">Preparing slide view</div>
+            <div className="text-sm font-medium tracking-wide text-white/80">
+              Preparing slide view
+            </div>
           </div>
         </div>
       ) : null}

@@ -28,10 +28,7 @@ export default function SharedSlidePage() {
               {metaQuery.data?.filename ?? 'Slide viewer'}
             </h1>
           </div>
-          <Link
-            to="/login"
-            className="clinical-button clinical-secondary"
-          >
+          <Link to="/login" className="clinical-button clinical-secondary">
             Sign in
           </Link>
         </div>

@@ -84,10 +84,7 @@ export default function SlidesPage() {
           <p className="max-w-2xl text-sm text-slate-600">
             Upload and manage SVS files attached to this report.
           </p>
-          <Link
-            to="/reports"
-            className="clinical-button clinical-secondary w-fit"
-          >
+          <Link to="/reports" className="clinical-button clinical-secondary w-fit">
             Back to reports
           </Link>
         </div>
