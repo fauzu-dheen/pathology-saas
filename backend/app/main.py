@@ -5,6 +5,7 @@ from app.auth.router import router as auth_router
 from app.reports.router import router as reports_router
 from app.users.router import router as users_router
 from app.slides.router import router as slides_router
+from app.shares.router import share_router, public_router
 
 
 app = FastAPI()
@@ -21,6 +22,8 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(reports_router)
 app.include_router(slides_router)
+app.include_router(share_router)
+app.include_router(public_router)
 
 
 @app.get("/health")
