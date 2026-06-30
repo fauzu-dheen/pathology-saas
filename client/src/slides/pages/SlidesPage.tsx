@@ -26,6 +26,7 @@ export default function SlidesPage() {
   const report = reportsQuery.data?.find((item) => item.id === reportId)
   const canUpload =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:upload')
+  const canView = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
   const canDelete =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:delete')
 
@@ -101,7 +102,9 @@ export default function SlidesPage() {
 
         {slidesQuery.data && (
           <SlidesTable
+            reportId={reportId}
             slides={slidesQuery.data}
+            canView={canView === true}
             canDelete={canDelete === true}
             isDeleting={deleteSlide.isPending}
             onDelete={handleDelete}

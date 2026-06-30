@@ -3,6 +3,7 @@ import LoginPage from './auth/LoginPage'
 import OnboardPage from './auth/OnboardPage'
 import DashboardPage from './pages/DashboardPage'
 import ReportsPage from './reports/pages/ReportsPage'
+import SlideViewerPage from './slides/pages/SlideViewerPage'
 import SlidesPage from './slides/pages/SlidesPage'
 import UsersPage from './users/pages/UsersPage'
 
@@ -52,6 +53,14 @@ export default function App() {
           element={
             <RequireAuth>
               <SlidesPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/reports/:reportId/slides/:slideId/viewer"
+          element={
+            <RequireAuth>
+              <SlideViewerPage />
             </RequireAuth>
           }
         />

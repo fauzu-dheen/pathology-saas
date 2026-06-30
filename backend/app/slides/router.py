@@ -37,7 +37,7 @@ def delete_slide(
     user: models.User = Depends(require_permission("slides:delete")),
     db: Session = Depends(get_db),
 ):
-    service.delete_slide(db, user.organization_id, slide_id)
+    service.delete_slide(db, user.organization_id, report_id, slide_id)
 
 
 @router.get("/{slide_id}/dzi.xml")
@@ -47,7 +47,7 @@ def get_slide_dzi(
     user: models.User = Depends(require_permission("slides:view")),
     db: Session = Depends(get_db),
 ):
-    slide = service.get_slide_in_org(db, user.organization_id, slide_id)
+    slide = service.get_slide_for_report_in_org(db, user.organization_id, report_id, slide_id)
     xml = viewer.get_dzi_xml(slide.storage_path)
     return Response(content=xml, media_type="application/xml")
 
@@ -62,6 +62,6 @@ def get_slide_tile(
     user: models.User = Depends(require_permission("slides:view")),
     db: Session = Depends(get_db),
 ):
-    slide = service.get_slide_in_org(db, user.organization_id, slide_id)
+    slide = service.get_slide_for_report_in_org(db, user.organization_id, report_id, slide_id)
     tile_bytes = viewer.get_tile_bytes(slide.storage_path, level, col, row)
     return Response(content=tile_bytes, media_type="image/jpeg")

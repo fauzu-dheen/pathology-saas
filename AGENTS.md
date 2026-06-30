@@ -216,11 +216,11 @@ this explicitly during setup.
 
 ### Whole Slide Image Viewer
 
-- [ ] Add backend tile/metadata endpoints
-- [ ] Integrate OpenSlide or compatible slide reader
-- [ ] Add OpenSeadragon frontend viewer
-- [ ] Support smooth zoom
-- [ ] Support pan/navigation
+- [x] Add backend tile/metadata endpoints
+- [x] Integrate OpenSlide or compatible slide reader
+- [x] Add OpenSeadragon frontend viewer
+- [x] Support smooth zoom
+- [x] Support pan/navigation
 - [ ] Prevent raw original file download for normal viewing
 
 ### Sharing

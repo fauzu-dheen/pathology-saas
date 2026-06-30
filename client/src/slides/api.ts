@@ -1,4 +1,4 @@
-import { apiFetch } from '../lib/api'
+import { API_BASE, apiFetch } from '../lib/api'
 import type { Slide, UploadSlidesInput } from './types'
 
 export function listSlides(reportId: string) {
@@ -21,4 +21,18 @@ export function deleteSlide(reportId: string, slideId: string) {
   return apiFetch<void>(`/reports/${reportId}/slides/${slideId}`, {
     method: 'DELETE',
   })
+}
+
+export function getSlideDziUrl(reportId: string, slideId: string) {
+  return `${API_BASE}/reports/${reportId}/slides/${slideId}/dzi.xml`
+}
+
+export function getSlideTileUrl(
+  reportId: string,
+  slideId: string,
+  level: number,
+  col: number,
+  row: number,
+) {
+  return `${API_BASE}/reports/${reportId}/slides/${slideId}/tiles/${level}/${col}_${row}.jpeg`
 }

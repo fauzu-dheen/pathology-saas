@@ -21,6 +21,19 @@ def get_slide_in_org(db: Session, org_id: str, slide_id: str) -> models.Slide:
     return slide
 
 
+def get_slide_for_report_in_org(
+    db: Session, org_id: str, report_id: str, slide_id: str
+) -> models.Slide:
+    slide = (
+        db.query(models.Slide)
+        .filter_by(id=slide_id, organization_id=org_id, report_id=report_id)
+        .first()
+    )
+    if slide is None:
+        raise HTTPException(status_code=404, detail="Slide not found")
+    return slide
+
+
 def upload_slide(
     db: Session,
     org_id: str,
@@ -59,8 +72,8 @@ def upload_slide(
     db.commit()
 
 
-def delete_slide(db: Session, org_id: str, slide_id: str) -> None:
-    slide = get_slide_in_org(db, org_id, slide_id)
+def delete_slide(db: Session, org_id: str, report_id: str, slide_id: str) -> None:
+    slide = get_slide_for_report_in_org(db, org_id, report_id, slide_id)
     try:
         storage.delete_slide_file(slide.storage_path)
     except Exception:
