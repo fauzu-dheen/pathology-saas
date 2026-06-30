@@ -11,4 +11,20 @@ export type Slide = {
 export type UploadSlidesInput = {
   reportId: string
   files: File[]
+  onProgress?: (progress: UploadProgress) => void
+}
+
+export type UploadFileProgress = {
+  name: string
+  loaded: number
+  total: number
+  percent: number
+  status: 'pending' | 'uploading' | 'complete'
+}
+
+export type UploadProgress = {
+  files: UploadFileProgress[]
+  totalLoaded: number
+  totalSize: number
+  percent: number
 }

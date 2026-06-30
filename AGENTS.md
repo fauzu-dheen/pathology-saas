@@ -209,7 +209,7 @@ this explicitly during setup.
 
 - [x] Upload one `.svs` file
 - [x] Upload multiple `.svs` files
-- [ ] Show upload progress
+- [x] Show upload progress
 - [x] Persist uploaded files
 - [x] Store slide metadata
 - [x] Validate file type and ownership

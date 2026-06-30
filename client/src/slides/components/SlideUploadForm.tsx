@@ -1,13 +1,20 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import type { UploadProgress } from '../types'
 
 type SlideUploadFormProps = {
   isUploading: boolean
+  progress: UploadProgress | null
   error: string | null
   onSubmit: (files: File[]) => void
 }
 
-export default function SlideUploadForm({ isUploading, error, onSubmit }: SlideUploadFormProps) {
+export default function SlideUploadForm({
+  isUploading,
+  progress,
+  error,
+  onSubmit,
+}: SlideUploadFormProps) {
   const [files, setFiles] = useState<File[]>([])
 
   const handleSubmit = (event: FormEvent) => {
@@ -46,6 +53,40 @@ export default function SlideUploadForm({ isUploading, error, onSubmit }: SlideU
             <li key={`${file.name}-${file.size}`}>{file.name}</li>
           ))}
         </ul>
+      )}
+
+      {progress && (
+        <div className="mt-5 rounded-md border border-slate-200 bg-slate-50 p-4">
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-medium text-slate-700">Upload progress</span>
+            <span className="font-semibold text-slate-950">{progress.percent}%</span>
+          </div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200">
+            <div
+              className="h-full rounded-full bg-sky-700 transition-all"
+              style={{ width: `${progress.percent}%` }}
+            />
+          </div>
+
+          <div className="mt-4 space-y-3">
+            {progress.files.map((file) => (
+              <div key={file.name}>
+                <div className="flex items-center justify-between text-xs text-slate-600">
+                  <span className="max-w-[75%] truncate">{file.name}</span>
+                  <span>
+                    {file.status === 'complete' ? 'Complete' : `${file.percent}%`}
+                  </span>
+                </div>
+                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200">
+                  <div
+                    className="h-full rounded-full bg-emerald-600 transition-all"
+                    style={{ width: `${file.percent}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {error && <p className="mt-4 text-sm text-red-600">{error}</p>}

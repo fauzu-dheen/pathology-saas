@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useCurrentUser } from '../../auth/hooks'
 import { useReports } from '../../reports/hooks'
 import SlideUploadForm from '../components/SlideUploadForm'
 import SlidesTable from '../components/SlidesTable'
 import { useDeleteSlide, useSlides, useUploadSlides } from '../hooks'
+import type { UploadProgress } from '../types'
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message
@@ -16,6 +18,7 @@ function hasPermission(permissions: string[] | undefined, permission: string) {
 
 export default function SlidesPage() {
   const { reportId } = useParams()
+  const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null)
   const currentUserQuery = useCurrentUser()
   const reportsQuery = useReports()
   const slidesQuery = useSlides(reportId)
@@ -33,6 +36,17 @@ export default function SlidesPage() {
   const handleDelete = (id: string) => {
     const confirmed = window.confirm('Delete this slide?')
     if (confirmed) deleteSlide.mutate(id)
+  }
+
+  const handleUpload = (files: File[]) => {
+    if (!reportId) return
+    setUploadProgress(null)
+    uploadSlides.mutate(
+      { reportId, files, onProgress: setUploadProgress },
+      {
+        onSuccess: () => setUploadProgress(null),
+      },
+    )
   }
 
   if (!reportId) {
@@ -77,8 +91,9 @@ export default function SlidesPage() {
         {canUpload && (
           <SlideUploadForm
             isUploading={uploadSlides.isPending}
+            progress={uploadProgress}
             error={uploadSlides.error ? getErrorMessage(uploadSlides.error) : null}
-            onSubmit={(files) => uploadSlides.mutate({ reportId, files })}
+            onSubmit={handleUpload}
           />
         )}
 
