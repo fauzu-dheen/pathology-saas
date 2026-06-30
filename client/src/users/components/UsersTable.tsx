@@ -6,7 +6,12 @@ type UsersTableProps = {
   users: User[]
   isUpdating: boolean
   isDeleting: boolean
-  onUpdate: (input: { id: string; name: string | null; is_admin: boolean; permissions: Permission[] }) => void
+  onUpdate: (input: {
+    id: string
+    name: string | null
+    is_admin: boolean
+    permissions: Permission[]
+  }) => void
   onDelete: (id: string) => void
 }
 

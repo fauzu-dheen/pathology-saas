@@ -1,12 +1,7 @@
 import { Link } from 'react-router-dom'
 import UserForm from '../components/UserForm'
 import UsersTable from '../components/UsersTable'
-import {
-  useCreateUser,
-  useDeleteUser,
-  useUpdateUser,
-  useUsers,
-} from '../hooks'
+import { useCreateUser, useDeleteUser, useUpdateUser, useUsers } from '../hooks'
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message
@@ -47,8 +42,8 @@ export default function UsersPage() {
             Organization users
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-slate-600">
-            Admins can pre-create users by email. When those users sign in with Google,
-            their account links to this organization automatically.
+            Admins can pre-create users by email. When those users sign in with Google, their
+            account links to this organization automatically.
           </p>
         </section>
 

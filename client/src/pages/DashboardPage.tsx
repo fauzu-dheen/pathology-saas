@@ -37,8 +37,8 @@ export default function DashboardPage() {
             Workspace overview
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-slate-600">
-            This is the first protected application screen. We will build user management,
-            reports, uploads, slide viewing, and sharing into this shell.
+            This is the first protected application screen. We will build user management, reports,
+            uploads, slide viewing, and sharing into this shell.
           </p>
         </section>
 

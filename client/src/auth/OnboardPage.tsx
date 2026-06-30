@@ -1,40 +1,40 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { apiFetch } from '../lib/api';
-import type { AuthResponse } from './types';
+import { useState } from 'react'
+import type { FormEvent } from 'react'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { apiFetch } from '../lib/api'
+import type { AuthResponse } from './types'
 
 export default function OnboardPage() {
-  const { state } = useLocation();
-  const navigate = useNavigate();
-  const [orgName, setOrgName] = useState('');
-  const [orgSlug, setOrgSlug] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const { state } = useLocation()
+  const navigate = useNavigate()
+  const [orgName, setOrgName] = useState('')
+  const [orgSlug, setOrgSlug] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
-  const pendingToken = state?.pendingToken;
+  const pendingToken = state?.pendingToken
 
   if (!pendingToken) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace />
   }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError(null);
+    e.preventDefault()
+    setError(null)
     try {
       const data = await apiFetch<AuthResponse>('/auth/onboard', {
         method: 'POST',
         body: JSON.stringify({ pending_token: pendingToken, org_name: orgName, org_slug: orgSlug }),
-      });
+      })
       if (data.access_token) {
-        localStorage.setItem('access_token', data.access_token);
-        navigate('/dashboard');
+        localStorage.setItem('access_token', data.access_token)
+        navigate('/dashboard')
       } else {
-        setError('Onboarding response was missing a session token.');
+        setError('Onboarding response was missing a session token.')
       }
     } catch {
-      setError('Could not create organization — slug may already be taken.');
+      setError('Could not create organization — slug may already be taken.')
     }
-  };
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
@@ -81,5 +81,5 @@ export default function OnboardPage() {
         </button>
       </form>
     </div>
-  );
+  )
 }
