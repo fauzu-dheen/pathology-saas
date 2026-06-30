@@ -5,7 +5,12 @@ from app import models
 
 
 def list_reports(db: Session, org_id: str) -> list[models.Report]:
-    return db.query(models.Report).filter_by(organization_id=org_id).order_by(models.Report.created_at.desc()).all()
+    return (
+        db.query(models.Report)
+        .filter_by(organization_id=org_id)
+        .order_by(models.Report.created_at.desc())
+        .all()
+    )
 
 
 def get_report_in_org(db: Session, org_id: str, report_id: str) -> models.Report:
@@ -15,7 +20,9 @@ def get_report_in_org(db: Session, org_id: str, report_id: str) -> models.Report
     return report
 
 
-def create_report(db: Session, org_id: str, owner_id: str, title: str, description: str | None) -> None:
+def create_report(
+    db: Session, org_id: str, owner_id: str, title: str, description: str | None
+) -> None:
     report = models.Report(
         organization_id=org_id,
         owner_id=owner_id,
@@ -26,7 +33,9 @@ def create_report(db: Session, org_id: str, owner_id: str, title: str, descripti
     db.commit()
 
 
-def update_report(db: Session, org_id: str, report_id: str, title: str | None, description: str | None) -> None:
+def update_report(
+    db: Session, org_id: str, report_id: str, title: str | None, description: str | None
+) -> None:
     report = get_report_in_org(db, org_id, report_id)
 
     if title is not None:

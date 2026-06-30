@@ -21,9 +21,11 @@ export default function ReportsPage() {
   const deleteReport = useDeleteReport()
 
   const currentUser = currentUserQuery.data
-  const canCreate = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:create')
+  const canCreate =
+    currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:create')
   const canEdit = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:edit')
-  const canDelete = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:delete')
+  const canDelete =
+    currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:delete')
 
   const handleDelete = (id: string) => {
     const confirmed = window.confirm('Delete this report?')
