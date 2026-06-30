@@ -20,6 +20,8 @@ class OnboardRequest(BaseModel):
 class MeResponse(BaseModel):
     user_id: str
     org_id: str
+    org_name: str
+    org_slug: str
     email: str
     name: str | None
     is_admin: bool

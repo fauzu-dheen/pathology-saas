@@ -1,6 +1,7 @@
 import { ClipboardList, LogOut, Microscope, Users } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import type { ReactNode } from 'react'
+import { useCurrentUser } from '../auth/hooks'
 
 type AppShellProps = {
   title: string
@@ -20,6 +21,10 @@ export default function AppShell({
   maxWidth = 'standard',
   children,
 }: AppShellProps) {
+  const currentUserQuery = useCurrentUser()
+  const organizationName = currentUserQuery.data?.org_name ?? eyebrow
+  const organizationSlug = currentUserQuery.data?.org_slug
+
   const handleSignOut = () => {
     localStorage.removeItem('access_token')
     window.location.assign('/login')
@@ -38,7 +43,12 @@ export default function AppShell({
                 <p className="text-xs font-semibold uppercase tracking-wide text-cyan-100/70">
                   Clinical Workspace
                 </p>
-                <h1 className="mt-0.5 text-lg font-semibold text-white">{eyebrow}</h1>
+                <h1 className="mt-0.5 text-lg font-semibold text-white">{organizationName}</h1>
+                {organizationSlug && (
+                  <p className="mt-0.5 max-w-36 truncate text-xs text-cyan-50/60">
+                    /{organizationSlug}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -90,7 +100,6 @@ export default function AppShell({
           ].join(' ')}
         >
           <div className="mb-6">
-            <p className="text-sm font-semibold text-[#0f766e]">{eyebrow}</p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight text-[#102a35]">{title}</h2>
           </div>
           {children}

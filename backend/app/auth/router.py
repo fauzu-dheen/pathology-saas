@@ -39,6 +39,8 @@ def me(claims: dict = Depends(get_current_claims), db: Session = Depends(get_db)
     return MeResponse(
         user_id=str(user.id),
         org_id=str(user.organization_id),
+        org_name=user.organization.name,
+        org_slug=user.organization.slug,
         email=user.email,
         name=user.name,
         is_admin=user.is_admin,
