@@ -26,6 +26,8 @@ export default function ReportsPage() {
   const canEdit = currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:edit')
   const canDelete =
     currentUser?.is_admin || hasPermission(currentUser?.permissions, 'reports:delete')
+  const canViewSlides =
+    currentUser?.is_admin || hasPermission(currentUser?.permissions, 'slides:view')
 
   const handleDelete = (id: string) => {
     const confirmed = window.confirm('Delete this report?')
@@ -93,6 +95,7 @@ export default function ReportsPage() {
         {reportsQuery.data && (
           <ReportsTable
             reports={reportsQuery.data}
+            canViewSlides={canViewSlides === true}
             canEdit={canEdit === true}
             canDelete={canDelete === true}
             isUpdating={updateReport.isPending}

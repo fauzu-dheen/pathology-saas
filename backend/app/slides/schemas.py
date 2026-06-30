@@ -1,11 +1,13 @@
 from datetime import datetime
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
 class SlideResponse(BaseModel):
-    id: str
-    report_id: str
-    owner_id: str
+    id: UUID
+    report_id: UUID
+    owner_id: UUID
     filename: str
     status: str
     file_size_bytes: int | None

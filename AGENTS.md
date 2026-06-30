@@ -207,12 +207,12 @@ this explicitly during setup.
 
 ### SVS Uploads
 
-- [ ] Upload one `.svs` file
-- [ ] Upload multiple `.svs` files
+- [x] Upload one `.svs` file
+- [x] Upload multiple `.svs` files
 - [ ] Show upload progress
-- [ ] Persist uploaded files
-- [ ] Store slide metadata
-- [ ] Validate file type and ownership
+- [x] Persist uploaded files
+- [x] Store slide metadata
+- [x] Validate file type and ownership
 
 ### Whole Slide Image Viewer
 

@@ -3,6 +3,7 @@ import LoginPage from './auth/LoginPage'
 import OnboardPage from './auth/OnboardPage'
 import DashboardPage from './pages/DashboardPage'
 import ReportsPage from './reports/pages/ReportsPage'
+import SlidesPage from './slides/pages/SlidesPage'
 import UsersPage from './users/pages/UsersPage'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -43,6 +44,14 @@ export default function App() {
           element={
             <RequireAuth>
               <ReportsPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/reports/:reportId/slides"
+          element={
+            <RequireAuth>
+              <SlidesPage />
             </RequireAuth>
           }
         />
